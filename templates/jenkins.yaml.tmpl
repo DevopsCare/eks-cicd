@@ -18,8 +18,9 @@ master:
         - script: >
             import com.cloudbees.hudson.plugins.folder.*;
             import jenkins.model.Jenkins;
-            Jenkins.instance.createProject(Folder.class, 'Infrastructure');
-
+            if (Jenkins.instance.getItem('Infrastructure') == null) {
+              Jenkins.instance.createProject(Folder.class, 'Infrastructure');
+            }
       jobs: |
         jobs:
         - script: >
@@ -169,9 +170,6 @@ master:
                 - secretVolume:
                     mountPath: "/home/jenkins/.docker"
                     secretName: "jenkins-docker-cfg"
-                - secretVolume:
-                    mountPath: "/home/jenkins/.gnupg"
-                    secretName: "jenkins-release-gpg"
               - containers:
                 - args: "^$${computer.jnlpmac} ^$${computer.name}"
                   image: "jenkinsci/jnlp-slave:4.3-1"
@@ -197,7 +195,7 @@ master:
                   resourceLimitMemory: "256Mi"
                   resourceRequestCpu: "100m"
                   resourceRequestMemory: "128Mi"
-                  ttyEnabled: true    
+                  ttyEnabled: true
                 envVars:
                 - containerEnvVar:
                     key: "DOCKER_CONFIG"
@@ -234,9 +232,6 @@ master:
                 - secretVolume:
                     mountPath: "/home/jenkins/.docker"
                     secretName: "jenkins-docker-cfg"
-                - secretVolume:
-                    mountPath: "/home/jenkins/.gnupg"
-                    secretName: "jenkins-release-gpg"
               - containers:
                 - args: "cat"
                   command: "/bin/sh -c"
@@ -292,9 +287,6 @@ master:
                 - secretVolume:
                     mountPath: "/home/jenkins/.docker"
                     secretName: "jenkins-docker-cfg"
-                - secretVolume:
-                    mountPath: "/home/jenkins/.gnupg"
-                    secretName: "jenkins-release-gpg"
               - containers:
                 - args: "cat"
                   command: "/bin/sh -c"
@@ -405,9 +397,6 @@ master:
                 - secretVolume:
                     mountPath: "/home/jenkins/.docker"
                     secretName: "jenkins-docker-cfg"
-                - secretVolume:
-                    mountPath: "/home/jenkins/.gnupg"
-                    secretName: "jenkins-release-gpg"
               - containers:
                 - args: "^$${computer.jnlpmac} ^$${computer.name}"
                   image: "jenkinsci/jnlp-slave:4.3-1"
@@ -468,9 +457,6 @@ master:
                 - secretVolume:
                     mountPath: "/home/jenkins/.docker"
                     secretName: "jenkins-docker-cfg"
-                - secretVolume:
-                    mountPath: "/home/jenkins/.gnupg"
-                    secretName: "jenkins-release-gpg"
               - containers:
                 - args: "cat"
                   command: "/bin/sh -c"

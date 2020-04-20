@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+        http://maven.apache.org/xsd/settings-1.0.0.xsd">
+    <interactiveMode>false</interactiveMode>
+    <localRepository>$${user.home}/.mvnrepository</localRepository>
+    <servers>
+        <server>
+            <id>${project_prefix}</id>
+            <username>admin</username>
+            <password>${admin_password}</password>
+        </server>
+    </servers>
+    <mirrors>
+        <mirror>
+            <id>${project_prefix}</id>
+            <name>${project_prefix} Nexus</name>
+            <url>http://nexus/repository/maven-group/</url>
+            <mirrorOf>external:*</mirrorOf>
+        </mirror>
+    </mirrors>
+
+    <profiles>
+        <profile>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <id>${project_prefix}</id>
+            <properties>
+                <altDeploymentRepository>${project_prefix}::default::http://nexus/repository/maven-snapshots/</altDeploymentRepository>
+                <altReleaseDeploymentRepository>${project_prefix}::default::http://nexus/repository/maven-releases/</altReleaseDeploymentRepository>
+                <altSnapshotDeploymentRepository>${project_prefix}::default::http://nexus/repository/maven-snapshots/</altSnapshotDeploymentRepository>
+            </properties>
+            <repositories>
+                <repository>
+                    <id>${project_prefix}.snapshots</id>
+                    <name>${project_prefix} Snapshot Repository</name>
+                    <url>http://nexus/repository/maven-snapshots/</url>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                    <releases>
+                        <enabled>false</enabled>
+                    </releases>
+                </repository>
+            </repositories>
+        </profile>
+        <activeProfiles>
+            <!--make the profile active all the time -->
+            <activeProfile>${project_prefix}</activeProfile>
+        </activeProfiles>
+    </profiles>
+</settings>

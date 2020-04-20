@@ -22,3 +22,33 @@ resource "helm_release" "jenkins" {
     ignore_changes = [keyring]
   }
 }
+
+resource "kubernetes_role" "jenkins_ns_management" {
+  metadata {
+    name      = "jenkins-ns-managemenet"
+    namespace = kubernetes_namespace.cicd.id
+  }
+
+  rule {
+    api_groups = [""]
+    resources  = ["namespaces"]
+    verbs      = ["get", "list", "create", "delete", "update"]
+  }
+}
+
+resource "kubernetes_role_binding" "jenkins_ns_management" {
+  metadata {
+    name      = "jenkins-ns-managemenet"
+    namespace = kubernetes_namespace.cicd.id
+  }
+  role_ref {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "Role"
+    name      = "jenkins-ns-managemenet"
+  }
+  subject {
+    kind      = "ServiceAccount"
+    name      = "jenkins"
+    namespace = kubernetes_namespace.cicd.id
+  }
+}
