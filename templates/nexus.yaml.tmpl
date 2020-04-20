@@ -1,0 +1,27 @@
+fullnameOverride: nexus
+nameOverride: nexus
+
+resources:
+  requests:
+    cpu: 200m
+    memory: 2Gi
+podAnnotations:
+  cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
+persistence:
+  enabled: true
+  storageSize: ${storage_size}
+
+nexus:
+  service:
+    type: ClusterIP
+  annotations:
+    fabric8.io/expose: "true"
+    fabric8.io/ingress.annotations: |-
+      kubernetes.io/ingress.class: nginx
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+
+service:
+  enabled: false
+
+ingress:
+  enabled: false
