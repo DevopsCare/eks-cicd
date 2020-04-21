@@ -6,6 +6,7 @@ rbac:
   readSecrets: true
 
 master:
+  tag: lts-jdk11
   sidecars:
     configAutoReload:
       enabled: true
@@ -114,65 +115,8 @@ master:
               serverUrl: "https://kubernetes.default:443"
               templates:
               - containers:
-                - args: "-tunnel $(JENKINS_TUNNEL) ^$${computer.jnlpmac} ^$${computer.name}"
-                  image: "jenkinsci/jnlp-slave:4.3-1"
-                  name: "jnlp"
-                  resourceRequestCpu: "100m"
-                  resourceRequestMemory: "128Mi"
-                - args: "cat"
-                  command: "/bin/sh -c"
-                  image: "gcr.io/jenkinsxio/builder-maven-nodejs:0.1.551"
-                  name: "aws-cdk"
-                  privileged: true
-                  resourceLimitCpu: "2"
-                  resourceLimitMemory: "2048Mi"
-                  resourceRequestCpu: "400m"
-                  resourceRequestMemory: "512Mi"
-                  ttyEnabled: true
-                envVars:
-                - containerEnvVar:
-                    key: "DOCKER_CONFIG"
-                    value: "/home/jenkins/.docker/"
-                - containerEnvVar:
-                    key: "GIT_AUTHOR_EMAIL"
-                    value: "cadmium@${global_fqdn}"
-                - containerEnvVar:
-                    key: "GIT_AUTHOR_NAME"
-                    value: "cadmium"
-                - containerEnvVar:
-                    key: "GIT_COMMITTER_EMAIL"
-                    value: "cadmium@${global_fqdn}"
-                - containerEnvVar:
-                    key: "GIT_COMMITTER_NAME"
-                    value: "cadmium"
-                - containerEnvVar:
-                    key: "JENKINS_URL"
-                    value: "http://jenkins:8080"
-                - containerEnvVar:
-                    key: "XDG_CONFIG_HOME"
-                    value: "/home/jenkins"
-                - containerEnvVar:
-                    key: "_JAVA_OPTIONS"
-                    value: "-XX:+UnlockExperimentalVMOptions -Dsun.zip.disableMemoryMapping=true\
-                      \ -XX:+UseParallelGC -XX:MinHeapFreeRatio=5 -XX:MaxHeapFreeRatio=10\
-                      \ -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Xms10m -Xmx512m"
-                label: "jenkins-aws-cdk"
-                name: "aws-cdk"
-                serviceAccount: "jenkins"
-                slaveConnectTimeoutStr: "0"
-                volumes:
-                - hostPathVolume:
-                    hostPath: "/var/run/docker.sock"
-                    mountPath: "/var/run/docker.sock"
-                - secretVolume:
-                    mountPath: "/root/.m2/"
-                    secretName: "jenkins-maven-settings"
-                - secretVolume:
-                    mountPath: "/home/jenkins/.docker"
-                    secretName: "jenkins-docker-cfg"
-              - containers:
-                - args: "-tunnel $(JENKINS_TUNNEL) ^$${computer.jnlpmac} ^$${computer.name}"
-                  image: "jenkinsci/jnlp-slave:4.3-1"
+                - args: "^$${computer.jnlpmac} ^$${computer.name}"
+                  image: "jenkins/inbound-agent:4.3-4-jdk11"
                   name: "jnlp"
                   resourceRequestCpu: "100m"
                   resourceRequestMemory: "128Mi"
@@ -180,7 +124,8 @@ master:
                   command: "/bin/sh -c"
                   image: "alpine/helm:3.1.2"
                   name: "helm"
-                  privileged: false
+                  runAsUser: 1000
+                  runAsGroup: 1000
                   resourceLimitCpu: "500m"
                   resourceLimitMemory: "256Mi"
                   resourceRequestCpu: "100m"
@@ -190,7 +135,8 @@ master:
                   command: "/bin/sh -c"
                   image: "bitnami/kubectl:1.16"
                   name: "kubectl"
-                  privileged: false
+                  runAsUser: 1000
+                  runAsGroup: 1000
                   resourceLimitCpu: "500m"
                   resourceLimitMemory: "256Mi"
                   resourceRequestCpu: "100m"
@@ -212,9 +158,6 @@ master:
                 - containerEnvVar:
                     key: "GIT_COMMITTER_NAME"
                     value: "cadmium"
-                - containerEnvVar:
-                    key: "JENKINS_URL"
-                    value: "http://jenkins:8080"
                 - containerEnvVar:
                     key: "XDG_CONFIG_HOME"
                     value: "/home/jenkins"
@@ -237,14 +180,15 @@ master:
                   command: "/bin/sh -c"
                   image: "gcr.io/jenkinsxio/builder-gradle:0.1.551"
                   name: "gradle"
-                  privileged: true
+                  runAsUser: 1000
+                  runAsGroup: 1000
                   resourceLimitCpu: "1"
                   resourceLimitMemory: "1024Mi"
                   resourceRequestCpu: "400m"
                   resourceRequestMemory: "512Mi"
                   ttyEnabled: true
-                - args: "-tunnel $(JENKINS_TUNNEL) ^$${computer.jnlpmac} ^$${computer.name}"
-                  image: "jenkinsci/jnlp-slave:4.3-1"
+                - args: "^$${computer.jnlpmac} ^$${computer.name}"
+                  image: "jenkins/inbound-agent:4.3-4-jdk11"
                   name: "jnlp"
                   resourceRequestCpu: "100m"
                   resourceRequestMemory: "128Mi"
@@ -264,9 +208,6 @@ master:
                 - containerEnvVar:
                     key: "GIT_COMMITTER_NAME"
                     value: "cadmium"
-                - containerEnvVar:
-                    key: "JENKINS_URL"
-                    value: "http://jenkins:8080"
                 - containerEnvVar:
                     key: "XDG_CONFIG_HOME"
                     value: "/home/jenkins"
@@ -292,14 +233,15 @@ master:
                   command: "/bin/sh -c"
                   image: "gcr.io/jenkinsxio/builder-jx:0.1.551"
                   name: "jx-base"
-                  privileged: true
+                  runAsUser: 1000
+                  runAsGroup: 1000
                   resourceLimitCpu: "400m"
                   resourceLimitMemory: "512Mi"
                   resourceRequestCpu: "200m"
                   resourceRequestMemory: "256Mi"
                   ttyEnabled: true
-                - args: "-tunnel $(JENKINS_TUNNEL) ^$${computer.jnlpmac} ^$${computer.name}"
-                  image: "jenkinsci/jnlp-slave:4.3-1"
+                - args: "^$${computer.jnlpmac} ^$${computer.name}"
+                  image: "jenkins/inbound-agent:4.3-4-jdk11"
                   name: "jnlp"
                   resourceRequestCpu: "100m"
                   resourceRequestMemory: "128Mi"
@@ -320,9 +262,6 @@ master:
                     key: "GIT_COMMITTER_NAME"
                     value: "cadmium"
                 - containerEnvVar:
-                    key: "JENKINS_URL"
-                    value: "http://jenkins:8080"
-                - containerEnvVar:
                     key: "XDG_CONFIG_HOME"
                     value: "/home/jenkins"
                 label: "jenkins-jx-base"
@@ -337,8 +276,8 @@ master:
                     mountPath: "/home/jenkins/.docker"
                     secretName: "jenkins-docker-cfg"
               - containers:
-                - args: "-tunnel $(JENKINS_TUNNEL) ^$${computer.jnlpmac} ^$${computer.name}"
-                  image: "jenkinsci/jnlp-slave:4.3-1"
+                - args: "^$${computer.jnlpmac} ^$${computer.name}"
+                  image: "jenkins/inbound-agent:4.3-4-jdk11"
                   name: "jnlp"
                   resourceRequestCpu: "100m"
                   resourceRequestMemory: "128Mi"
@@ -346,7 +285,8 @@ master:
                   command: "/bin/sh -c"
                   image: "gcr.io/jenkinsxio/builder-maven:0.1.551"
                   name: "maven"
-                  privileged: true
+                  runAsUser: 1000
+                  runAsGroup: 1000
                   resourceLimitCpu: "1"
                   resourceLimitMemory: "1024Mi"
                   resourceRequestCpu: "400m"
@@ -368,9 +308,6 @@ master:
                 - containerEnvVar:
                     key: "GIT_COMMITTER_NAME"
                     value: "cadmium"
-                - containerEnvVar:
-                    key: "JENKINS_URL"
-                    value: "http://jenkins:8080"
                 - containerEnvVar:
                     key: "MAVEN_OPTS"
                     value: "-Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn"
@@ -398,8 +335,8 @@ master:
                     mountPath: "/home/jenkins/.docker"
                     secretName: "jenkins-docker-cfg"
               - containers:
-                - args: "-tunnel $(JENKINS_TUNNEL) ^$${computer.jnlpmac} ^$${computer.name}"
-                  image: "jenkinsci/jnlp-slave:4.3-1"
+                - args: "^$${computer.jnlpmac} ^$${computer.name}"
+                  image: "jenkins/inbound-agent:4.3-4-jdk11"
                   name: "jnlp"
                   resourceRequestCpu: "100m"
                   resourceRequestMemory: "128Mi"
@@ -407,7 +344,8 @@ master:
                   command: "/bin/sh -c"
                   image: "gcr.io/jenkinsxio/builder-maven-java11:0.1.551"
                   name: "maven"
-                  privileged: true
+                  runAsUser: 1000
+                  runAsGroup: 1000
                   resourceLimitCpu: "1"
                   resourceLimitMemory: "1024Mi"
                   resourceRequestCpu: "400m"
@@ -429,9 +367,6 @@ master:
                 - containerEnvVar:
                     key: "GIT_COMMITTER_NAME"
                     value: "cadmium"
-                - containerEnvVar:
-                    key: "JENKINS_URL"
-                    value: "http://jenkins:8080"
                 - containerEnvVar:
                     key: "MAVEN_OPTS"
                     value: "-Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn"
@@ -482,9 +417,6 @@ master:
                     key: "GIT_COMMITTER_NAME"
                     value: "cadmium"
                 - containerEnvVar:
-                    key: "JENKINS_URL"
-                    value: "http://jenkins:8080"
-                - containerEnvVar:
                     key: "XDG_CONFIG_HOME"
                     value: "/home/jenkins"
                 label: "jenkins-packer"
@@ -499,8 +431,8 @@ master:
                     mountPath: "/home/jenkins/.docker"
                     secretName: "jenkins-docker-cfg"
               - containers:
-                - args: "-tunnel $(JENKINS_TUNNEL) ^$${computer.jnlpmac} ^$${computer.name}"
-                  image: "jenkinsci/jnlp-slave:4.3-1"
+                - args: "^$${computer.jnlpmac} ^$${computer.name}"
+                  image: "jenkins/inbound-agent:4.3-4-jdk11"
                   name: "jnlp"
                   resourceRequestCpu: "100m"
                   resourceRequestMemory: "128Mi"
@@ -508,7 +440,8 @@ master:
                   command: "/bin/sh -c"
                   image: "gcr.io/jenkinsxio/builder-jx:0.1.551"
                   name: "promote"
-                  privileged: true
+                  runAsUser: 1000
+                  runAsGroup: 1000
                   resourceLimitCpu: "400m"
                   resourceLimitMemory: "200Mi"
                   resourceRequestCpu: "200m"
@@ -531,9 +464,6 @@ master:
                     key: "GIT_COMMITTER_NAME"
                     value: "cadmium"
                 - containerEnvVar:
-                    key: "JENKINS_URL"
-                    value: "http://jenkins:8080"
-                - containerEnvVar:
                     key: "XDG_CONFIG_HOME"
                     value: "/home/jenkins"
                 label: "jenkins-promote"
@@ -548,8 +478,8 @@ master:
                     mountPath: "/home/jenkins/.docker"
                     secretName: "jenkins-docker-cfg"
               - containers:
-                - args: "-tunnel $(JENKINS_TUNNEL) ^$${computer.jnlpmac} ^$${computer.name}"
-                  image: "jenkinsci/jnlp-slave:4.3-1"
+                - args: "^$${computer.jnlpmac} ^$${computer.name}"
+                  image: "jenkins/inbound-agent:4.3-4-jdk11"
                   name: "jnlp"
                   resourceRequestCpu: "100m"
                   resourceRequestMemory: "128Mi"
@@ -557,7 +487,8 @@ master:
                   command: "/bin/sh -c"
                   image: "python:3-buster"
                   name: "python"
-                  privileged: true
+                  runAsUser: 1000
+                  runAsGroup: 1000
                   resourceLimitCpu: "2"
                   resourceLimitMemory: "2048Mi"
                   resourceRequestCpu: "400m"
@@ -579,9 +510,6 @@ master:
                 - containerEnvVar:
                     key: "GIT_COMMITTER_NAME"
                     value: "cadmium"
-                - containerEnvVar:
-                    key: "JENKINS_URL"
-                    value: "http://jenkins:8080"
                 - containerEnvVar:
                     key: "XDG_CONFIG_HOME"
                     value: "/home/jenkins"
@@ -597,8 +525,8 @@ master:
                     mountPath: "/home/jenkins/.docker"
                     secretName: "jenkins-docker-cfg"
               - containers:
-                - args: "-tunnel $(JENKINS_TUNNEL) ^$${computer.jnlpmac} ^$${computer.name}"
-                  image: "jenkinsci/jnlp-slave:4.3-1"
+                - args: "^$${computer.jnlpmac} ^$${computer.name}"
+                  image: "jenkins/inbound-agent:4.3-4-jdk11"
                   name: "jnlp"
                   resourceRequestCpu: "100m"
                   resourceRequestMemory: "128Mi"
@@ -606,7 +534,8 @@ master:
                   command: "/bin/sh -c"
                   image: "python:2-buster"
                   name: "python"
-                  privileged: true
+                  runAsUser: 1000
+                  runAsGroup: 1000
                   resourceLimitCpu: "2"
                   resourceLimitMemory: "2048Mi"
                   resourceRequestCpu: "400m"
@@ -629,9 +558,6 @@ master:
                     key: "GIT_COMMITTER_NAME"
                     value: "cadmium"
                 - containerEnvVar:
-                    key: "JENKINS_URL"
-                    value: "http://jenkins:8080"
-                - containerEnvVar:
                     key: "XDG_CONFIG_HOME"
                     value: "/home/jenkins"
                 label: "jenkins-python2"
@@ -646,8 +572,8 @@ master:
                     mountPath: "/home/jenkins/.docker"
                     secretName: "jenkins-docker-cfg"
               - containers:
-                - args: "-tunnel $(JENKINS_TUNNEL) ^$${computer.jnlpmac} ^$${computer.name}"
-                  image: "jenkinsci/jnlp-slave:4.3-1"
+                - args: "^$${computer.jnlpmac} ^$${computer.name}"
+                  image: "jenkins/inbound-agent:4.3-4-jdk11"
                   name: "jnlp"
                   resourceRequestCpu: "100m"
                   resourceRequestMemory: "128Mi"
@@ -655,7 +581,8 @@ master:
                   command: "/bin/sh -c"
                   image: "hashicorp/terraform:0.12.24"
                   name: "terraform"
-                  privileged: true
+                  runAsUser: 1000
+                  runAsGroup: 1000
                   resourceLimitCpu: "1"
                   resourceLimitMemory: "1448Mi"
                   resourceRequestCpu: "400m"
@@ -678,9 +605,6 @@ master:
                     key: "GIT_COMMITTER_NAME"
                     value: "cadmium"
                 - containerEnvVar:
-                    key: "JENKINS_URL"
-                    value: "http://jenkins:8080"
-                - containerEnvVar:
                     key: "XDG_CONFIG_HOME"
                     value: "/home/jenkins"
                 label: "jenkins-terraform"
@@ -695,8 +619,8 @@ master:
                     mountPath: "/home/jenkins/.docker"
                     secretName: "jenkins-docker-cfg"
               - containers:
-                - args: "-tunnel $(JENKINS_TUNNEL) ^$${computer.jnlpmac} ^$${computer.name}"
-                  image: "jenkinsci/jnlp-slave:4.3-1"
+                - args: "^$${computer.jnlpmac} ^$${computer.name}"
+                  image: "jenkins/inbound-agent:4.3-4-jdk11"
                   name: "jnlp"
                   resourceRequestCpu: "100m"
                   resourceRequestMemory: "128Mi"
@@ -704,7 +628,8 @@ master:
                   command: "/bin/sh -c"
                   image: "alpine/helm:3.1.2"
                   name: "helm"
-                  privileged: true
+                  runAsUser: 1000
+                  runAsGroup: 1000
                   resourceLimitCpu: "1"
                   resourceLimitMemory: "512Mi"
                   resourceRequestCpu: "200m"
@@ -726,9 +651,6 @@ master:
                 - containerEnvVar:
                     key: "GIT_COMMITTER_NAME"
                     value: "cadmium"
-                - containerEnvVar:
-                    key: "JENKINS_URL"
-                    value: "http://jenkins:8080"
                 - containerEnvVar:
                     key: "XDG_CONFIG_HOME"
                     value: "/home/jenkins"
@@ -907,136 +829,136 @@ master:
     enabled: true
   overwritePlugin: false
   installPlugins:
-    - ace-editor:1.1
-    - ansicolor:0.6.2
-    - ant:1.10
-    - antisamy-markup-formatter:1.7
-    - apache-httpcomponents-client-4-api:4.5.10-2.0
-    - artifactory:3.5.0
-    - authentication-tokens:1.3
-    - basic-branch-build-strategies:1.3.2
-    - blueocean-autofavorite:1.2.4
-    - blueocean-bitbucket-pipeline:1.21.0
-    - blueocean-commons:1.21.0
-    - blueocean-config:1.21.0
-    - blueocean-core-js:1.21.0
-    - blueocean-dashboard:1.21.0
-    - blueocean-display-url:2.3.0
-    - blueocean-events:1.21.0
-    - blueocean-git-pipeline:1.21.0
-    - blueocean-github-pipeline:1.21.0
-    - blueocean-i18n:1.21.0
-    - blueocean-jira:1.21.0
-    - blueocean-jwt:1.21.0
-    - blueocean-personalization:1.21.0
-    - blueocean-pipeline-api-impl:1.21.0
-    - blueocean-pipeline-editor:1.21.0
-    - blueocean-pipeline-scm-api:1.21.0
-    - blueocean-rest-impl:1.21.0
-    - blueocean-rest:1.21.0
-    - blueocean-web:1.21.0
-    - blueocean:1.21.0
-    - bouncycastle-api:2.18
-    - branch-api:2.5.5
-    - cloudbees-bitbucket-branch-source:2.6.0
-    - cloudbees-folder:6.10.1
-    - command-launcher:1.4
-    - config-file-provider:3.6.3
-    - configuration-as-code-groovy:1.1
-    - configuration-as-code:1.35
-    - copyartifact:1.43
-    - credentials-binding:1.20
-    - credentials:2.3.0
-    - display-url-api:2.3.2
-    - docker-commons:1.16
-    - docker-workflow:1.21
-    - durable-task:1.33
-    - external-monitor-job:1.7
-    - favorite:2.3.2
-    - folder-properties:1.0
-    - git-client:3.0.0
-    - git-server:1.9
-    - git:4.0.0
-    - gitea:1.1.2
-    - github-api:1.95
-    - github-branch-source:2.5.8
-    - github:1.29.5
-    - gitlab-plugin:1.5.13
-    - gradle:1.36
-    - greenballs:1.15
-    - h2-api:1.4.199
-    - handlebars:1.1.1
-    - handy-uri-templates-2-api:2.1.8-1.0
-    - htmlpublisher:1.21
-    - http_request:1.8.24
-    - ivy:2.1
-    - jackson2-api:2.10.2
-    - javadoc:1.5
-    - jdk-tool:1.4
-    - jenkins-design-language:1.21.0
-    - jira:3.0.11
-    - job-dsl:1.76
-    - jquery-detached:1.2.1
-    - jsch:0.1.55.1
-    - junit:1.28
-    - kubernetes-credentials-provider:0.12.1
-    - kubernetes-credentials:0.4.1
-    - kubernetes:1.18.2
-    - ldap:1.21
-    - localization-zh-cn:0.0.15
-    - lockable-resources:2.7
-    - mailer:1.29
-    - matrix-auth:2.5
-    - matrix-project:1.14
-    - maven-plugin:3.4
-    - mercurial:2.8
-    - metrics:4.0.2.6
-    - momentjs:1.1.1
-    - pam-auth:1.6
-    - pipeline-build-step:2.11
-    - pipeline-graph-analysis:1.10
-    - pipeline-input-step:2.11
-    - pipeline-maven:3.8.2
-    - pipeline-milestone-step:1.3.1
-    - pipeline-model-api:1.4.0
-    - pipeline-model-declarative-agent:1.1.1
-    - pipeline-model-definition:1.4.0
-    - pipeline-model-extensions:1.4.0
-    - pipeline-rest-api:2.12
-    - pipeline-stage-step:2.3
-    - pipeline-stage-tags-metadata:1.4.0
-    - pipeline-stage-view:2.12
-    - pipeline-utility-steps:2.3.1
-    - plain-credentials:1.5
-    - pubsub-light:1.13
-    - rebuild:1.31
-    - resource-disposer:0.14
-    - saml:1.1.2
-    - scm-api:2.6.3
-    - scm-filter-branch-pr:0.4
-    - script-security:1.68
-    - sonar:2.11
-    - sse-gateway:1.20
-    - ssh-credentials:1.17.3
-    - structs:1.20
-    - support-core:2.65
-    - testng-plugin:1.15
-    - timestamper:1.10
-    - token-macro:2.10
-    - variant:1.3
-    - windows-slaves:1.6
-    - workflow-aggregator:2.6
-    - workflow-api:2.38
-    - workflow-basic-steps:2.19
-    - workflow-cps-global-lib:2.15
-    - workflow-cps:2.78
-    - workflow-durable-task-step:2.31
-    - workflow-job:2.36
-    - workflow-multibranch:2.21
-    - workflow-scm-step:2.9
-    - workflow-step-api:2.22
-    - workflow-support:3.3
-    - ws-cleanup:0.38
+  - ace-editor:1.1
+  - ansicolor:0.6.2
+  - ant:1.10
+  - antisamy-markup-formatter:1.7
+  - apache-httpcomponents-client-4-api:4.5.10-2.0
+  - artifactory:3.5.0
+  - authentication-tokens:1.3
+  - basic-branch-build-strategies:1.3.2
+  - blueocean-autofavorite:1.2.4
+  - blueocean-bitbucket-pipeline:1.21.0
+  - blueocean-commons:1.21.0
+  - blueocean-config:1.21.0
+  - blueocean-core-js:1.21.0
+  - blueocean-dashboard:1.21.0
+  - blueocean-display-url:2.3.0
+  - blueocean-events:1.21.0
+  - blueocean-git-pipeline:1.21.0
+  - blueocean-github-pipeline:1.21.0
+  - blueocean-i18n:1.21.0
+  - blueocean-jira:1.21.0
+  - blueocean-jwt:1.21.0
+  - blueocean-personalization:1.21.0
+  - blueocean-pipeline-api-impl:1.21.0
+  - blueocean-pipeline-editor:1.21.0
+  - blueocean-pipeline-scm-api:1.21.0
+  - blueocean-rest-impl:1.21.0
+  - blueocean-rest:1.21.0
+  - blueocean-web:1.21.0
+  - blueocean:1.21.0
+  - bouncycastle-api:2.18
+  - branch-api:2.5.5
+  - cloudbees-bitbucket-branch-source:2.6.0
+  - cloudbees-folder:6.12
+  - command-launcher:1.4
+  - config-file-provider:3.6.3
+  - configuration-as-code-groovy:1.1
+  - configuration-as-code:1.35
+  - copyartifact:1.43
+  - credentials-binding:1.20
+  - credentials:2.3.7
+  - display-url-api:2.3.2
+  - docker-commons:1.16
+  - docker-workflow:1.23
+  - durable-task:1.34
+  - external-monitor-job:1.7
+  - favorite:2.3.2
+  - folder-properties:1.0
+  - git-client:3.0.0
+  - git-server:1.9
+  - git:4.0.0
+  - gitea:1.1.2
+  - github-api:1.95
+  - github-branch-source:2.5.8
+  - github:1.29.5
+  - gitlab-plugin:1.5.13
+  - gradle:1.36
+  - greenballs:1.15
+  - h2-api:1.4.199
+  - handlebars:1.1.1
+  - handy-uri-templates-2-api:2.1.8-1.0
+  - htmlpublisher:1.21
+  - http_request:1.8.24
+  - ivy:2.1
+  - jackson2-api:2.10.3
+  - javadoc:1.5
+  - jdk-tool:1.4
+  - jenkins-design-language:1.21.0
+  - jira:3.0.11
+  - job-dsl:1.76
+  - jquery-detached:1.2.1
+  - jsch:0.1.55.1
+  - junit:1.28
+  - kubernetes-credentials-provider:0.13
+  - kubernetes-credentials:0.6.2
+  - kubernetes:1.25.3
+  - ldap:1.21
+  - localization-zh-cn:0.0.15
+  - lockable-resources:2.7
+  - mailer:1.29
+  - matrix-auth:2.5
+  - matrix-project:1.14
+  - maven-plugin:3.4
+  - mercurial:2.8
+  - metrics:4.0.2.6
+  - momentjs:1.1.1
+  - pam-auth:1.6
+  - pipeline-build-step:2.11
+  - pipeline-graph-analysis:1.10
+  - pipeline-input-step:2.11
+  - pipeline-maven:3.8.2
+  - pipeline-milestone-step:1.3.1
+  - pipeline-model-api:1.6.0
+  - pipeline-model-declarative-agent:1.1.1
+  - pipeline-model-definition:1.6.0
+  - pipeline-model-extensions:1.6.0
+  - pipeline-rest-api:2.12
+  - pipeline-stage-step:2.3
+  - pipeline-stage-tags-metadata:1.6.0
+  - pipeline-stage-view:2.12
+  - pipeline-utility-steps:2.3.1
+  - plain-credentials:1.7
+  - pubsub-light:1.13
+  - rebuild:1.31
+  - resource-disposer:0.14
+  - saml:1.1.2
+  - scm-api:2.6.3
+  - scm-filter-branch-pr:0.4
+  - script-security:1.68
+  - sonar:2.11
+  - sse-gateway:1.20
+  - ssh-credentials:1.17.3
+  - structs:1.20
+  - support-core:2.65
+  - testng-plugin:1.15
+  - timestamper:1.10
+  - token-macro:2.10
+  - variant:1.3
+  - windows-slaves:1.6
+  - workflow-aggregator:2.6
+  - workflow-api:2.40
+  - workflow-basic-steps:2.19
+  - workflow-cps-global-lib:2.15
+  - workflow-cps:2.80
+  - workflow-durable-task-step:2.31
+  - workflow-job:2.36
+  - workflow-multibranch:2.21
+  - workflow-scm-step:2.9
+  - workflow-step-api:2.22
+  - workflow-support:3.3
+  - ws-cleanup:0.38
   containerEnv: {}
 
 agent:

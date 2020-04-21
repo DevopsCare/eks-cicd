@@ -23,27 +23,25 @@ resource "helm_release" "jenkins" {
   }
 }
 
-resource "kubernetes_role" "jenkins_ns_management" {
+resource "kubernetes_cluster_role" "jenkins_ns_management" {
   metadata {
-    name      = "jenkins-ns-managemenet"
-    namespace = kubernetes_namespace.cicd.id
+    name = "jenkins-ns-managemenet"
   }
 
   rule {
     api_groups = [""]
     resources  = ["namespaces"]
-    verbs      = ["get", "list", "create", "delete", "update"]
+    verbs      = ["get", "list", "create", "delete", "update", "patch"]
   }
 }
 
-resource "kubernetes_role_binding" "jenkins_ns_management" {
+resource "kubernetes_cluster_role_binding" "jenkins_ns_management" {
   metadata {
-    name      = "jenkins-ns-managemenet"
-    namespace = kubernetes_namespace.cicd.id
+    name = "jenkins-ns-managemenet"
   }
   role_ref {
     api_group = "rbac.authorization.k8s.io"
-    kind      = "Role"
+    kind      = "ClusterRole"
     name      = "jenkins-ns-managemenet"
   }
   subject {
