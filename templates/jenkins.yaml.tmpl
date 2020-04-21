@@ -114,7 +114,7 @@ master:
               serverUrl: "https://kubernetes.default:443"
               templates:
               - containers:
-                - args: "^$${computer.jnlpmac} ^$${computer.name}"
+                - args: "-tunnel $(JENKINS_TUNNEL) ^$${computer.jnlpmac} ^$${computer.name}"
                   image: "jenkinsci/jnlp-slave:4.3-1"
                   name: "jnlp"
                   resourceRequestCpu: "100m"
@@ -171,7 +171,7 @@ master:
                     mountPath: "/home/jenkins/.docker"
                     secretName: "jenkins-docker-cfg"
               - containers:
-                - args: "^$${computer.jnlpmac} ^$${computer.name}"
+                - args: "-tunnel $(JENKINS_TUNNEL) ^$${computer.jnlpmac} ^$${computer.name}"
                   image: "jenkinsci/jnlp-slave:4.3-1"
                   name: "jnlp"
                   resourceRequestCpu: "100m"
@@ -243,7 +243,7 @@ master:
                   resourceRequestCpu: "400m"
                   resourceRequestMemory: "512Mi"
                   ttyEnabled: true
-                - args: "^$${computer.jnlpmac} ^$${computer.name}"
+                - args: "-tunnel $(JENKINS_TUNNEL) ^$${computer.jnlpmac} ^$${computer.name}"
                   image: "jenkinsci/jnlp-slave:4.3-1"
                   name: "jnlp"
                   resourceRequestCpu: "100m"
@@ -298,7 +298,7 @@ master:
                   resourceRequestCpu: "200m"
                   resourceRequestMemory: "256Mi"
                   ttyEnabled: true
-                - args: "^$${computer.jnlpmac} ^$${computer.name}"
+                - args: "-tunnel $(JENKINS_TUNNEL) ^$${computer.jnlpmac} ^$${computer.name}"
                   image: "jenkinsci/jnlp-slave:4.3-1"
                   name: "jnlp"
                   resourceRequestCpu: "100m"
@@ -337,7 +337,7 @@ master:
                     mountPath: "/home/jenkins/.docker"
                     secretName: "jenkins-docker-cfg"
               - containers:
-                - args: "^$${computer.jnlpmac} ^$${computer.name}"
+                - args: "-tunnel $(JENKINS_TUNNEL) ^$${computer.jnlpmac} ^$${computer.name}"
                   image: "jenkinsci/jnlp-slave:4.3-1"
                   name: "jnlp"
                   resourceRequestCpu: "100m"
@@ -398,7 +398,7 @@ master:
                     mountPath: "/home/jenkins/.docker"
                     secretName: "jenkins-docker-cfg"
               - containers:
-                - args: "^$${computer.jnlpmac} ^$${computer.name}"
+                - args: "-tunnel $(JENKINS_TUNNEL) ^$${computer.jnlpmac} ^$${computer.name}"
                   image: "jenkinsci/jnlp-slave:4.3-1"
                   name: "jnlp"
                   resourceRequestCpu: "100m"
@@ -499,7 +499,7 @@ master:
                     mountPath: "/home/jenkins/.docker"
                     secretName: "jenkins-docker-cfg"
               - containers:
-                - args: "^$${computer.jnlpmac} ^$${computer.name}"
+                - args: "-tunnel $(JENKINS_TUNNEL) ^$${computer.jnlpmac} ^$${computer.name}"
                   image: "jenkinsci/jnlp-slave:4.3-1"
                   name: "jnlp"
                   resourceRequestCpu: "100m"
@@ -548,7 +548,7 @@ master:
                     mountPath: "/home/jenkins/.docker"
                     secretName: "jenkins-docker-cfg"
               - containers:
-                - args: "^$${computer.jnlpmac} ^$${computer.name}"
+                - args: "-tunnel $(JENKINS_TUNNEL) ^$${computer.jnlpmac} ^$${computer.name}"
                   image: "jenkinsci/jnlp-slave:4.3-1"
                   name: "jnlp"
                   resourceRequestCpu: "100m"
@@ -597,7 +597,7 @@ master:
                     mountPath: "/home/jenkins/.docker"
                     secretName: "jenkins-docker-cfg"
               - containers:
-                - args: "^$${computer.jnlpmac} ^$${computer.name}"
+                - args: "-tunnel $(JENKINS_TUNNEL) ^$${computer.jnlpmac} ^$${computer.name}"
                   image: "jenkinsci/jnlp-slave:4.3-1"
                   name: "jnlp"
                   resourceRequestCpu: "100m"
@@ -646,7 +646,7 @@ master:
                     mountPath: "/home/jenkins/.docker"
                     secretName: "jenkins-docker-cfg"
               - containers:
-                - args: "^$${computer.jnlpmac} ^$${computer.name}"
+                - args: "-tunnel $(JENKINS_TUNNEL) ^$${computer.jnlpmac} ^$${computer.name}"
                   image: "jenkinsci/jnlp-slave:4.3-1"
                   name: "jnlp"
                   resourceRequestCpu: "100m"
@@ -695,7 +695,7 @@ master:
                     mountPath: "/home/jenkins/.docker"
                     secretName: "jenkins-docker-cfg"
               - containers:
-                - args: "^$${computer.jnlpmac} ^$${computer.name}"
+                - args: "-tunnel $(JENKINS_TUNNEL) ^$${computer.jnlpmac} ^$${computer.name}"
                   image: "jenkinsci/jnlp-slave:4.3-1"
                   name: "jnlp"
                   resourceRequestCpu: "100m"
