@@ -23,26 +23,14 @@ resource "helm_release" "jenkins" {
   }
 }
 
-resource "kubernetes_cluster_role" "jenkins_ns_management" {
+resource "kubernetes_cluster_role_binding" "jenkins_cluster_admin" {
   metadata {
-    name = "jenkins-ns-managemenet"
-  }
-
-  rule {
-    api_groups = [""]
-    resources  = ["namespaces"]
-    verbs      = ["get", "list", "create", "delete", "update", "patch"]
-  }
-}
-
-resource "kubernetes_cluster_role_binding" "jenkins_ns_management" {
-  metadata {
-    name = "jenkins-ns-managemenet"
+    name = "jenkins-cluster-admin"
   }
   role_ref {
     api_group = "rbac.authorization.k8s.io"
     kind      = "ClusterRole"
-    name      = "jenkins-ns-managemenet"
+    name      = "cluster-admin"
   }
   subject {
     kind      = "ServiceAccount"
