@@ -20,3 +20,9 @@ service:
 
 ingress:
     enabled: false
+
+env:
+  existingSecret: chartmuseum-secret
+  existingSecretMappings:
+    BASIC_AUTH_USER: basic-auth-user
+    BASIC_AUTH_PASS: basic-auth-pass
