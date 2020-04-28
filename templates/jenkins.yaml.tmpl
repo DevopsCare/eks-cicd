@@ -118,13 +118,14 @@ master:
                 - args: "^$${computer.jnlpmac} ^$${computer.name}"
                   image: "jenkins/inbound-agent:4.3-4-jdk11"
                   name: "jnlp"
+                  command: "/usr/local/bin/jenkins-agent"
                   resourceRequestCpu: "100m"
                   resourceRequestMemory: "128Mi"
                 - args: "cat"
                   command: "/bin/sh -c"
                   image: "alpine/helm:3.1.2"
                   name: "helm"
-                  runAsUser: 1000
+                  runAsUser: 0
                   runAsGroup: 1000
                   resourceLimitCpu: "500m"
                   resourceLimitMemory: "256Mi"
@@ -135,7 +136,7 @@ master:
                   command: "/bin/sh -c"
                   image: "bitnami/kubectl:1.16"
                   name: "kubectl"
-                  runAsUser: 1000
+                  runAsUser: 0
                   runAsGroup: 1000
                   resourceLimitCpu: "500m"
                   resourceLimitMemory: "256Mi"
@@ -161,6 +162,9 @@ master:
                 - containerEnvVar:
                     key: "XDG_CONFIG_HOME"
                     value: "/home/jenkins/agent"
+                - containerEnvVar:
+                    key: "HOME"
+                    value: "/home/jenkins/agent"
                 label: "jenkins-kubernetes"
                 name: "kubernetes"
                 serviceAccount: "jenkins"
@@ -180,7 +184,7 @@ master:
                   command: "/bin/sh -c"
                   image: "gcr.io/jenkinsxio/builder-gradle:0.1.551"
                   name: "gradle"
-                  runAsUser: 1000
+                  runAsUser: 0
                   runAsGroup: 1000
                   resourceLimitCpu: "1"
                   resourceLimitMemory: "1024Mi"
@@ -190,6 +194,7 @@ master:
                 - args: "^$${computer.jnlpmac} ^$${computer.name}"
                   image: "jenkins/inbound-agent:4.3-4-jdk11"
                   name: "jnlp"
+                  command: "/usr/local/bin/jenkins-agent"
                   resourceRequestCpu: "100m"
                   resourceRequestMemory: "128Mi"
                 envVars:
@@ -210,6 +215,9 @@ master:
                     value: "cadmium"
                 - containerEnvVar:
                     key: "XDG_CONFIG_HOME"
+                    value: "/home/jenkins/agent"
+                - containerEnvVar:
+                    key: "HOME"
                     value: "/home/jenkins/agent"
                 - containerEnvVar:
                     key: "_JAVA_OPTIONS"
@@ -233,7 +241,7 @@ master:
                   command: "/bin/sh -c"
                   image: "gcr.io/jenkinsxio/builder-jx:0.1.551"
                   name: "jx-base"
-                  runAsUser: 1000
+                  runAsUser: 0
                   runAsGroup: 1000
                   resourceLimitCpu: "400m"
                   resourceLimitMemory: "512Mi"
@@ -243,6 +251,7 @@ master:
                 - args: "^$${computer.jnlpmac} ^$${computer.name}"
                   image: "jenkins/inbound-agent:4.3-4-jdk11"
                   name: "jnlp"
+                  command: "/usr/local/bin/jenkins-agent"
                   resourceRequestCpu: "100m"
                   resourceRequestMemory: "128Mi"
                 envVars:
@@ -264,6 +273,9 @@ master:
                 - containerEnvVar:
                     key: "XDG_CONFIG_HOME"
                     value: "/home/jenkins/agent"
+                - containerEnvVar:
+                    key: "HOME"
+                    value: "/home/jenkins/agent"
                 label: "jenkins-jx-base"
                 name: "jx-base"
                 serviceAccount: "jenkins"
@@ -279,13 +291,14 @@ master:
                 - args: "^$${computer.jnlpmac} ^$${computer.name}"
                   image: "jenkins/inbound-agent:4.3-4-jdk11"
                   name: "jnlp"
+                  command: "/usr/local/bin/jenkins-agent"
                   resourceRequestCpu: "100m"
                   resourceRequestMemory: "128Mi"
                 - args: "cat"
                   command: "/bin/sh -c"
                   image: "gcr.io/jenkinsxio/builder-maven:0.1.551"
                   name: "maven"
-                  runAsUser: 1000
+                  runAsUser: 0
                   runAsGroup: 1000
                   resourceLimitCpu: "1"
                   resourceLimitMemory: "1024Mi"
@@ -313,6 +326,9 @@ master:
                     value: "-Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn"
                 - containerEnvVar:
                     key: "XDG_CONFIG_HOME"
+                    value: "/home/jenkins/agent"
+                - containerEnvVar:
+                    key: "HOME"
                     value: "/home/jenkins/agent"
                 - containerEnvVar:
                     key: "_JAVA_OPTIONS"
@@ -338,13 +354,14 @@ master:
                 - args: "^$${computer.jnlpmac} ^$${computer.name}"
                   image: "jenkins/inbound-agent:4.3-4-jdk11"
                   name: "jnlp"
+                  command: "/usr/local/bin/jenkins-agent"
                   resourceRequestCpu: "100m"
                   resourceRequestMemory: "128Mi"
                 - args: "cat"
                   command: "/bin/sh -c"
                   image: "gcr.io/jenkinsxio/builder-maven-java11:0.1.551"
                   name: "maven"
-                  runAsUser: 1000
+                  runAsUser: 0
                   runAsGroup: 1000
                   resourceLimitCpu: "1"
                   resourceLimitMemory: "1024Mi"
@@ -372,6 +389,9 @@ master:
                     value: "-Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn"
                 - containerEnvVar:
                     key: "XDG_CONFIG_HOME"
+                    value: "/home/jenkins/agent"
+                - containerEnvVar:
+                    key: "HOME"
                     value: "/home/jenkins/agent"
                 - containerEnvVar:
                     key: "_JAVA_OPTIONS"
@@ -419,6 +439,9 @@ master:
                 - containerEnvVar:
                     key: "XDG_CONFIG_HOME"
                     value: "/home/jenkins/agent"
+                - containerEnvVar:
+                    key: "HOME"
+                    value: "/home/jenkins/agent"
                 label: "jenkins-packer"
                 name: "packer"
                 serviceAccount: "jenkins"
@@ -434,13 +457,14 @@ master:
                 - args: "^$${computer.jnlpmac} ^$${computer.name}"
                   image: "jenkins/inbound-agent:4.3-4-jdk11"
                   name: "jnlp"
+                  command: "/usr/local/bin/jenkins-agent"
                   resourceRequestCpu: "100m"
                   resourceRequestMemory: "128Mi"
                 - args: "cat"
                   command: "/bin/sh -c"
                   image: "gcr.io/jenkinsxio/builder-jx:0.1.551"
                   name: "promote"
-                  runAsUser: 1000
+                  runAsUser: 0
                   runAsGroup: 1000
                   resourceLimitCpu: "400m"
                   resourceLimitMemory: "200Mi"
@@ -466,6 +490,9 @@ master:
                 - containerEnvVar:
                     key: "XDG_CONFIG_HOME"
                     value: "/home/jenkins/agent"
+                - containerEnvVar:
+                    key: "HOME"
+                    value: "/home/jenkins/agent"
                 label: "jenkins-promote"
                 name: "promote"
                 serviceAccount: "jenkins"
@@ -481,13 +508,14 @@ master:
                 - args: "^$${computer.jnlpmac} ^$${computer.name}"
                   image: "jenkins/inbound-agent:4.3-4-jdk11"
                   name: "jnlp"
+                  command: "/usr/local/bin/jenkins-agent"
                   resourceRequestCpu: "100m"
                   resourceRequestMemory: "128Mi"
                 - args: "cat"
                   command: "/bin/sh -c"
                   image: "python:3-buster"
                   name: "python"
-                  runAsUser: 1000
+                  runAsUser: 0
                   runAsGroup: 1000
                   resourceLimitCpu: "2"
                   resourceLimitMemory: "2048Mi"
@@ -512,6 +540,9 @@ master:
                     value: "cadmium"
                 - containerEnvVar:
                     key: "XDG_CONFIG_HOME"
+                    value: "/home/jenkins/agent"
+                - containerEnvVar:
+                    key: "HOME"
                     value: "/home/jenkins/agent"
                 label: "jenkins-python"
                 name: "python"
@@ -528,13 +559,14 @@ master:
                 - args: "^$${computer.jnlpmac} ^$${computer.name}"
                   image: "jenkins/inbound-agent:4.3-4-jdk11"
                   name: "jnlp"
+                  command: "/usr/local/bin/jenkins-agent"
                   resourceRequestCpu: "100m"
                   resourceRequestMemory: "128Mi"
                 - args: "cat"
                   command: "/bin/sh -c"
                   image: "python:2-buster"
                   name: "python"
-                  runAsUser: 1000
+                  runAsUser: 0
                   runAsGroup: 1000
                   resourceLimitCpu: "2"
                   resourceLimitMemory: "2048Mi"
@@ -560,6 +592,9 @@ master:
                 - containerEnvVar:
                     key: "XDG_CONFIG_HOME"
                     value: "/home/jenkins/agent"
+                - containerEnvVar:
+                    key: "HOME"
+                    value: "/home/jenkins/agent"
                 label: "jenkins-python2"
                 name: "python2"
                 serviceAccount: "jenkins"
@@ -575,13 +610,14 @@ master:
                 - args: "^$${computer.jnlpmac} ^$${computer.name}"
                   image: "jenkins/inbound-agent:4.3-4-jdk11"
                   name: "jnlp"
+                  command: "/usr/local/bin/jenkins-agent"
                   resourceRequestCpu: "100m"
                   resourceRequestMemory: "128Mi"
                 - args: "cat"
                   command: "/bin/sh -c"
                   image: "hashicorp/terraform:0.12.24"
                   name: "terraform"
-                  runAsUser: 1000
+                  runAsUser: 0
                   runAsGroup: 1000
                   resourceLimitCpu: "1"
                   resourceLimitMemory: "1448Mi"
@@ -607,6 +643,9 @@ master:
                 - containerEnvVar:
                     key: "XDG_CONFIG_HOME"
                     value: "/home/jenkins/agent"
+                - containerEnvVar:
+                    key: "HOME"
+                    value: "/home/jenkins/agent"
                 label: "jenkins-terraform"
                 name: "terraform"
                 serviceAccount: "jenkins"
@@ -622,13 +661,14 @@ master:
                 - args: "^$${computer.jnlpmac} ^$${computer.name}"
                   image: "jenkins/inbound-agent:4.3-4-jdk11"
                   name: "jnlp"
+                  command: "/usr/local/bin/jenkins-agent"
                   resourceRequestCpu: "100m"
                   resourceRequestMemory: "128Mi"
                 - args: "cat"
                   command: "/bin/sh -c"
                   image: "alpine/helm:3.1.2"
                   name: "helm"
-                  runAsUser: 1000
+                  runAsUser: 0
                   runAsGroup: 1000
                   resourceLimitCpu: "1"
                   resourceLimitMemory: "512Mi"
@@ -653,6 +693,9 @@ master:
                     value: "cadmium"
                 - containerEnvVar:
                     key: "XDG_CONFIG_HOME"
+                    value: "/home/jenkins/agent"
+                - containerEnvVar:
+                    key: "HOME"
                     value: "/home/jenkins/agent"
                 label: "jenkins-helm"
                 name: "helm3"
