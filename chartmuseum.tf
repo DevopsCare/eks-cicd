@@ -2,11 +2,19 @@ resource "kubernetes_secret" "chartmuseum_secret" {
   metadata {
     name      = "chartmuseum-secret"
     namespace = kubernetes_namespace.cicd.id
+
+    labels = {
+      "jenkins.io/credentials-type" = "usernamePassword"
+    }
+
+    annotations = {
+      "jenkins.io/credentials-description" = "Chartmuseum BasicAuth"
+    }
   }
 
   data = {
-    "basic-auth-user" = "admin",
-    "basic-auth-pass" = var.default_admin_password
+    username = "admin"
+    password = var.default_admin_password
   }
 }
 
