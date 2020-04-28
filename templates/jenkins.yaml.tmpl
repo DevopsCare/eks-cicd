@@ -161,9 +161,6 @@ master:
                 - containerEnvVar:
                     key: "XDG_CONFIG_HOME"
                     value: "/home/jenkins/agent"
-                - containerEnvVar:
-                    key: "HOME"
-                    value: "/home/jenkins/agent"
                 label: "jenkins-kubernetes"
                 name: "kubernetes"
                 serviceAccount: "jenkins"
@@ -213,9 +210,6 @@ master:
                     value: "cadmium"
                 - containerEnvVar:
                     key: "XDG_CONFIG_HOME"
-                    value: "/home/jenkins/agent"
-                - containerEnvVar:
-                    key: "HOME"
                     value: "/home/jenkins/agent"
                 - containerEnvVar:
                     key: "_JAVA_OPTIONS"
@@ -270,9 +264,6 @@ master:
                 - containerEnvVar:
                     key: "XDG_CONFIG_HOME"
                     value: "/home/jenkins/agent"
-                - containerEnvVar:
-                    key: "HOME"
-                    value: "/home/jenkins/agent"
                 label: "jenkins-jx-base"
                 name: "jx-base"
                 serviceAccount: "jenkins"
@@ -322,9 +313,6 @@ master:
                     value: "-Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn"
                 - containerEnvVar:
                     key: "XDG_CONFIG_HOME"
-                    value: "/home/jenkins/agent"
-                - containerEnvVar:
-                    key: "HOME"
                     value: "/home/jenkins/agent"
                 - containerEnvVar:
                     key: "_JAVA_OPTIONS"
@@ -386,9 +374,6 @@ master:
                     key: "XDG_CONFIG_HOME"
                     value: "/home/jenkins/agent"
                 - containerEnvVar:
-                    key: "HOME"
-                    value: "/home/jenkins/agent"
-                - containerEnvVar:
                     key: "_JAVA_OPTIONS"
                     value: "-XX:+UnlockExperimentalVMOptions -Dsun.zip.disableMemoryMapping=true\
                       \ -XX:+UseParallelGC -XX:MinHeapFreeRatio=5 -XX:MaxHeapFreeRatio=10\
@@ -433,9 +418,6 @@ master:
                     value: "cadmium"
                 - containerEnvVar:
                     key: "XDG_CONFIG_HOME"
-                    value: "/home/jenkins/agent"
-                - containerEnvVar:
-                    key: "HOME"
                     value: "/home/jenkins/agent"
                 label: "jenkins-packer"
                 name: "packer"
@@ -484,9 +466,6 @@ master:
                 - containerEnvVar:
                     key: "XDG_CONFIG_HOME"
                     value: "/home/jenkins/agent"
-                - containerEnvVar:
-                    key: "HOME"
-                    value: "/home/jenkins/agent"
                 label: "jenkins-promote"
                 name: "promote"
                 serviceAccount: "jenkins"
@@ -533,9 +512,6 @@ master:
                     value: "cadmium"
                 - containerEnvVar:
                     key: "XDG_CONFIG_HOME"
-                    value: "/home/jenkins/agent"
-                - containerEnvVar:
-                    key: "HOME"
                     value: "/home/jenkins/agent"
                 label: "jenkins-python"
                 name: "python"
@@ -584,9 +560,6 @@ master:
                 - containerEnvVar:
                     key: "XDG_CONFIG_HOME"
                     value: "/home/jenkins/agent"
-                - containerEnvVar:
-                    key: "HOME"
-                    value: "/home/jenkins/agent"
                 label: "jenkins-python2"
                 name: "python2"
                 serviceAccount: "jenkins"
@@ -634,9 +607,6 @@ master:
                 - containerEnvVar:
                     key: "XDG_CONFIG_HOME"
                     value: "/home/jenkins/agent"
-                - containerEnvVar:
-                    key: "HOME"
-                    value: "/home/jenkins/agent"
                 label: "jenkins-terraform"
                 name: "terraform"
                 serviceAccount: "jenkins"
@@ -683,9 +653,6 @@ master:
                     value: "cadmium"
                 - containerEnvVar:
                     key: "XDG_CONFIG_HOME"
-                    value: "/home/jenkins/agent"
-                - containerEnvVar:
-                    key: "HOME"
                     value: "/home/jenkins/agent"
                 label: "jenkins-helm"
                 name: "helm3"
