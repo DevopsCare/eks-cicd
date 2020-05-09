@@ -38,3 +38,30 @@ resource "helm_release" "nexus" {
     ignore_changes = [keyring]
   }
 }
+
+resource "kubernetes_service" "nexus-internal" {
+  metadata {
+    name = "nexus-internal"
+    namespace = helm_release.nexus.namespace
+    annotations = {
+      "fabric8.io/expose"              = "true"
+      "fabric8.io/exposeHostNameAs"    = "external-dns.alpha.kubernetes.io/hostname"
+      "fabric8.io/ingress.annotations" = "kubernetes.io/ingress.class: noop\nkubernetes.io/tls-acme: false"
+    }
+  }
+  spec {
+    selector = {
+      app     = helm_release.nexus.name
+      release = helm_release.nexus.name
+    }
+
+    port {
+      name        = "nexus-http"
+      port        = 80
+      target_port = 8081
+    }
+
+    type       = "ClusterIP"
+    cluster_ip = "None"
+  }
+}

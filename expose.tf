@@ -28,5 +28,6 @@ EOT
     helm_release.jenkins,
     helm_release.chartmuseum,
     helm_release.nexus,
+    kubernetes_service.nexus-internal,
   ]
 }
