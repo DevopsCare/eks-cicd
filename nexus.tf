@@ -41,7 +41,7 @@ resource "helm_release" "nexus" {
 
 resource "kubernetes_service" "nexus-internal" {
   metadata {
-    name = "nexus-internal"
+    name      = "nexus-internal"
     namespace = helm_release.nexus.namespace
     annotations = {
       "fabric8.io/expose"              = "true"
@@ -63,5 +63,9 @@ resource "kubernetes_service" "nexus-internal" {
 
     type       = "ClusterIP"
     cluster_ip = "None"
+  }
+
+  lifecycle {
+    ignore_changes = [metadata]
   }
 }
