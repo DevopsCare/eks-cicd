@@ -25,6 +25,22 @@ master:
       jobs: |
         jobs:
         - script: >
+            multibranchPipelineJob('Infrastructure/Bootstrap') {
+              branchSources {
+                git {
+                  id = 'cad3-bootstrap-casc'
+                  remote('${cadmium_repo}')
+                  credentialsId('cadmium')
+                  includes('master')
+                }
+              }
+              factory {
+                workflowBranchProjectFactory {
+                  scriptPath('Jenkinsfile.bootstrap')
+                }
+              }
+            }
+        - script: >
             multibranchPipelineJob('Infrastructure/Create') {
               branchSources {
                 git {
@@ -817,6 +833,8 @@ master:
             - worstChildHealthMetric:
                 recursive: true
           gitHubPluginConfig:
+            - credentialsId: "github-token"
+              name: "GitHub"
             hookUrl: "http://jenkins.${namespace}.${project_prefix}.${global_fqdn}/github-webhook/"
           gitSCM:
             createAccountBasedOnEmail: false
@@ -958,6 +976,7 @@ master:
   - metrics:4.0.2.6
   - momentjs:1.1.1
   - pam-auth:1.6
+  - pipeline-aws:1.41
   - pipeline-build-step:2.11
   - pipeline-graph-analysis:1.10
   - pipeline-input-step:2.11
