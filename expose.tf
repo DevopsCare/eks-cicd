@@ -14,7 +14,7 @@ resource "null_resource" "process_ingresses" {
 
   provisioner "local-exec" {
     command = <<EOT
-      kubectl delete job -l app=cad3-exposecontroller --ignore-not-found=true
+      kubectl delete job -l app=cad3-exposecontroller -n ${var.kubernetes_namespace} --ignore-not-found=true
       kubectl apply -f ${path.module}/expose_controller_job.yaml
 EOT
 
@@ -28,5 +28,6 @@ EOT
     helm_release.jenkins,
     helm_release.chartmuseum,
     helm_release.nexus,
+    kubernetes_service.nexus-internal,
   ]
 }
