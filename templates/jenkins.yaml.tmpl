@@ -833,9 +833,10 @@ master:
             - worstChildHealthMetric:
                 recursive: true
           gitHubPluginConfig:
+            configs:
             - credentialsId: "github-token"
               name: "GitHub"
-              hookUrl: "http://jenkins.${namespace}.${project_prefix}.${global_fqdn}/github-webhook/"
+            hookUrl: "http://jenkins.${namespace}.${project_prefix}.${global_fqdn}/github-webhook/"
           gitSCM:
             createAccountBasedOnEmail: false
             showEntireCommitSummaryInChanges: false
