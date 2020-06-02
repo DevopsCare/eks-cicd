@@ -835,7 +835,7 @@ master:
           gitHubPluginConfig:
             - credentialsId: "github-token"
               name: "GitHub"
-            hookUrl: "http://jenkins.${namespace}.${project_prefix}.${global_fqdn}/github-webhook/"
+              hookUrl: "http://jenkins.${namespace}.${project_prefix}.${global_fqdn}/github-webhook/"
           gitSCM:
             createAccountBasedOnEmail: false
             showEntireCommitSummaryInChanges: false
@@ -953,7 +953,7 @@ master:
   - htmlpublisher:1.21
   - http_request:1.8.24
   - ivy:2.1
-  - jackson2-api:2.10.3
+  - jackson2-api:2.11.0
   - javadoc:1.5
   - jdk-tool:1.4
   - jenkins-design-language:1.21.0
