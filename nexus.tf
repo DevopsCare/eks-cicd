@@ -89,17 +89,22 @@ resource "kubernetes_service" "nexus-internal" {
 }
 
 resource "local_file" "nexus_provision_job" {
+  count = var.provision_nexus ? 1 : 0
+
   content = templatefile("${path.module}/templates/nexus.provision.yaml.tmpl", {
     nexus_provision_py     = base64encode(file("${path.module}/scripts/nexus_provision.py"))
     namespace              = var.kubernetes_namespace
     default_admin_password = var.default_admin_password
-    s3_bucket_name         = "com.riskfocus.${var.project_prefix}.nexus"
+    s3_bucket_name         = var.nexus_s3_bucket
+    remote_maven_repo_url  = var.remote_maven_repo_url
   })
 
   filename = "${path.module}/nexus_provision_job.yaml"
 }
 
 resource "null_resource" "provision_nexus" {
+  count = var.provision_nexus ? 1 : 0
+
   triggers = {
     jenkins = helm_release.nexus.status
   }

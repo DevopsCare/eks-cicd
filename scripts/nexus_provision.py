@@ -65,7 +65,7 @@ class Config:
     nexus_auth = HTTPBasicAuth(nexus_username, nexus_password)
 
     _new_s3_blobstore_bucket_name = os.getenv(
-        'S3_BUCKET_NAME', 'com.riskfocus.str.nexus')
+        'S3_BUCKET_NAME', 'example-bucket')
     new_s3_blobstore_config = {
         'name': 'S3',
         'bucketConfiguration': {
@@ -78,42 +78,42 @@ class Config:
         }
     }
 
-    rf_snapshots_maven_repo = {'name': 'rf-snapshot',
-                               'url': 'https://nexus.cicd.str.riskfocus.com/repository/rf-snapshot',
-                               'online': True,
-                               'storage': {
-                                   'blobStoreName': 'S3',
-                                   'strictContentTypeValidation': True,
-                                   'writePolicy': 'ALLOW'
-                               },
-                               'cleanup': None,
-                               'proxy': {
-                                   'remoteUrl': 'http://nexus-internal.cicd.rfs.riskfocus.com:8081/repository/maven-snapshots/',
-                                   'contentMaxAge': 1,
-                                   'metadataMaxAge': 1
-                               },
-                               'negativeCache': {
-                                   'enabled': True,
-                                   'timeToLive': 1
-                               },
-                               'httpClient': {
-                                   'blocked': False,
-                                   'autoBlock': True,
-                                   'connection': None,
-                                   'authentication': {
-                                       'type': 'username',
-                                       'username': 'admin',
-                                       'ntlmHost': None,
-                                       'ntlmDomain': None}
-                               },
-                               'routingRuleName': None,
-                               'maven': {
-                                   'versionPolicy': 'SNAPSHOT',
-                                   'layoutPolicy': 'STRICT'
-                               },
-                               'format': 'maven2',
-                               'type': 'proxy'
-                               }
+    _remote_repo_url = os.getenv('REMOTE_MAVEN_REPO_URL', 'http://example.com')
+    remote_maven_repo = {'name': 'rf-snapshot',
+                         'online': True,
+                         'storage': {
+                             'blobStoreName': 'S3',
+                             'strictContentTypeValidation': True,
+                             'writePolicy': 'ALLOW'
+                         },
+                         'cleanup': None,
+                         'proxy': {
+                             'remoteUrl': _remote_repo_url,
+                             'contentMaxAge': 1,
+                             'metadataMaxAge': 1
+                         },
+                         'negativeCache': {
+                             'enabled': True,
+                             'timeToLive': 1
+                         },
+                         'httpClient': {
+                             'blocked': False,
+                             'autoBlock': True,
+                             'connection': None,
+                             'authentication': {
+                                 'type': 'username',
+                                 'username': 'admin',
+                                 'ntlmHost': None,
+                                 'ntlmDomain': None}
+                         },
+                         'routingRuleName': None,
+                         'maven': {
+                             'versionPolicy': 'SNAPSHOT',
+                             'layoutPolicy': 'STRICT'
+                         },
+                         'format': 'maven2',
+                         'type': 'proxy'
+                         }
 
 
 def update_admin_password(config: Config) -> bool:

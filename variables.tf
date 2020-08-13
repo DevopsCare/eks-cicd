@@ -120,3 +120,18 @@ variable "cadmium_repo" {
   type    = string
   default = "none"
 }
+
+variable "nexus_s3_bucket" {
+  type    = string
+  default = "example-nexus-s3-bucket"
+}
+
+variable "provision_nexus" {
+  type    = bool
+  default = false
+}
+
+variable "remote_maven_repo_url" {
+  type    = string
+  default = "http://example.com"
+}
