@@ -61,10 +61,6 @@ variable "domain" {
   type = string
 }
 
-variable "environment_git_owner" {
-  type = string
-}
-
 variable "git_provider" {
   type    = string
   default = "github"
