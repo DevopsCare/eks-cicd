@@ -1,4 +1,3 @@
-
 #
 # Copyright (c) 2020 Risk Focus Inc.
 #
@@ -225,7 +224,7 @@ def main():
 
     repos = get_resource(config=config, api_type='repositories')
     for repo in repos:
-        if repo['name'] == config.rf_snapshots_maven_repo['name']:
+        if repo['name'] == config.remote_maven_repo['name']:
             rf_snapshots_maven_repo_existed = True
             continue
 
@@ -242,7 +241,7 @@ def main():
 
     if not rf_snapshots_maven_repo_existed:
         create_repo(config=config, repo_format='maven',
-                    repo=config.rf_snapshots_maven_repo)
+                    repo=config.remote_maven_repo)
         logger.info(
             'Please setup http auth for rf-snapshot repo and add it to group members of group maven')
 
