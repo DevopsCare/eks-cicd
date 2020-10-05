@@ -14,7 +14,11 @@
 * limitations under the License.
 */
 
+data "aws_caller_identity" "current" {}
+data "aws_region" "current" {}
+
 locals {
+  aws_region = data.aws_region.current.name
   git_provider_url = {
     "github"         = "https://github.com"
     "bitbucketcloud" = "https://bitbucket.org"

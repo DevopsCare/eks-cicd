@@ -30,6 +30,7 @@ resource "helm_release" "jenkins" {
       jenkins_memory = var.jenkins_resources["memory"]
       namespace      = kubernetes_namespace.cicd.id
       cadmium_repo   = var.cadmium_repo
+      aws_region     = local.aws_region
     })
   ]
   atomic = true

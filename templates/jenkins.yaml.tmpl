@@ -109,6 +109,10 @@ master:
                 value: "${global_fqdn}"
               - key: "PROJECT_PREFIX"
                 value: "${project_prefix}"
+              - key: "AWS_REGION"
+                value: "${aws_region}"
+              - key: "AWS_DEFAULT_REGION"
+                value: "${aws_region}"
           markupFormatter:
             rawHtml:
               disableSyntaxHighlighting: false
@@ -756,6 +760,7 @@ master:
             - "method hudson.model.Item delete"
             - "method jenkins.model.Jenkins getItemByFullName java.lang.String"
             - "staticMethod jenkins.model.Jenkins getInstance"
+            - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods reverse java.lang.Object[]"
 
       unclassified: |
         unclassified:
