@@ -26,7 +26,6 @@ locals {
 }
 
 provider "kubernetes" {
-  version                = "~>1.13"
   host                   = var.kubernetes_host
   cluster_ca_certificate = base64decode(var.kubernetes_ca_certificate)
   token                  = var.kubernetes_token
@@ -34,8 +33,6 @@ provider "kubernetes" {
 }
 
 provider "helm" {
-  version = "~>1.3"
-
   kubernetes {
     host                   = var.kubernetes_host
     cluster_ca_certificate = base64decode(var.kubernetes_ca_certificate)
