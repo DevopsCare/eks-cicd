@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 #
 # Copyright (c) 2020 Risk Focus Inc.
 #
@@ -15,11 +16,9 @@
 #
 #
 
-#!/usr/bin/env python3
 import os
 import logging
 from urllib.parse import urljoin
-# from dataclasses import dataclass
 from typing import Dict
 
 import requests
