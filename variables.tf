@@ -40,7 +40,7 @@ variable "nexus_storage_size" {
 }
 variable "nexus_helm_chart_version" {
   type    = string
-  default = "2.0.0"
+  default = "2.8.0"
 }
 #
 
