@@ -125,7 +125,7 @@ variable "provision_nexus" {
   default = false
 }
 
-variable "remote_maven_repo_url" {
+variable "global_maven_repo_url" {
   type    = string
-  default = "http://example.com"
+  default = ""
 }

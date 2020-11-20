@@ -54,8 +54,8 @@ spec:
           value: ${s3_bucket_name}
         - name: NEXUS_URL
           value: http://nexus:80
-        - name: REMOTE_MAVEN_REPO_URL
-          value: ${remote_maven_repo_url}
+        - name: GLOBAL_MAVEN_REPO_URL
+          value: ${global_maven_repo_url}
         image: "python:3-alpine"
         resources:
           limits:

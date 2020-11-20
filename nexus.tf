@@ -94,7 +94,7 @@ resource "local_file" "nexus_provision_job" {
     namespace              = var.kubernetes_namespace
     default_admin_password = var.default_admin_password
     s3_bucket_name         = var.nexus_s3_bucket
-    remote_maven_repo_url  = var.remote_maven_repo_url
+    global_maven_repo_url  = var.global_maven_repo_url
   })
 
   filename = "${path.module}/nexus_provision_job.yaml"

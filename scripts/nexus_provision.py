@@ -16,14 +16,13 @@
 #
 #
 
-import os
 import logging
-from urllib.parse import urljoin
+import os
 from typing import Dict
+from urllib.parse import urljoin
 
 import requests
 from requests.auth import HTTPBasicAuth
-
 
 # Setup logger
 LOG_FORMAT = logging.Formatter(
@@ -53,17 +52,14 @@ class NexusProvisionException(Exception):
 
 
 class Config:
-    _nexus_host: str = os.getenv(
-        'NEXUS_URL', 'http://nexus')
+    _nexus_host: str = os.getenv('NEXUS_URL', 'http://nexus')
     _nexus_api_path: str = os.getenv('NEXUS_API_PATH', 'service/rest/beta/')
     nexus_url: str = urljoin(_nexus_host, _nexus_api_path)
 
     nexus_username = os.getenv('NEXUS_ADMIN_USERNAME', 'admin')
     nexus_password = os.getenv('NEXUS_ADMIN_PASSWORD', 'admin123')
     nexus_auth = HTTPBasicAuth(nexus_username, nexus_password)
-
-    _new_s3_blobstore_bucket_name = os.getenv(
-        'S3_BUCKET_NAME', 'example-bucket')
+    _new_s3_blobstore_bucket_name = os.getenv('S3_BUCKET_NAME', 'example-bucket')
     new_s3_blobstore_config = {
         'name': 'S3',
         'bucketConfiguration': {
@@ -76,8 +72,8 @@ class Config:
         }
     }
 
-    _remote_repo_url = os.getenv('REMOTE_MAVEN_REPO_URL', 'http://example.com')
-    remote_maven_repo = {'name': 'rf-snapshot',
+    global_maven_repo_url = os.getenv('GLOBAL_MAVEN_REPO_URL', None)
+    global_maven_repo = {'name': 'global-snapshot',
                          'online': True,
                          'storage': {
                              'blobStoreName': 'S3',
@@ -86,7 +82,7 @@ class Config:
                          },
                          'cleanup': None,
                          'proxy': {
-                             'remoteUrl': _remote_repo_url,
+                             'remoteUrl': global_maven_repo_url,
                              'contentMaxAge': 1,
                              'metadataMaxAge': 1
                          },
@@ -101,6 +97,7 @@ class Config:
                              'authentication': {
                                  'type': 'username',
                                  'username': 'admin',
+                                 'password': nexus_password,
                                  'ntlmHost': None,
                                  'ntlmDomain': None}
                          },
@@ -219,17 +216,17 @@ def main():
         create_s3_blobstore(
             config=config, blobstore=config.new_s3_blobstore_config)
 
-    rf_snapshots_maven_repo_existed = False
+    global_snapshots_maven_repo_existed = False
 
     repos = get_resource(config=config, api_type='repositories')
     for repo in repos:
-        if repo['name'] == config.remote_maven_repo['name']:
-            rf_snapshots_maven_repo_existed = True
+        if repo['name'] == config.global_maven_repo['name']:
+            global_snapshots_maven_repo_existed = True
             continue
 
         if repo['format'] == 'maven2':
             if repo['type'] in ['proxy', 'hosted', 'hosted'] and \
-               repo['storage']['blobStoreName'] != 'S3':
+                repo['storage']['blobStoreName'] != 'S3':
                 repo['storage']['blobStoreName'] = 'S3'
                 update_repo(config=config, repo_format='maven', repo=repo)
         elif repo['format'] == 'nuget':
@@ -238,11 +235,11 @@ def main():
             logger.info(
                 f'repo must be updated manually - type {repo["format"]}, name {repo["name"]}')
 
-    if not rf_snapshots_maven_repo_existed:
+    if config.global_maven_repo_url and not global_snapshots_maven_repo_existed:
         create_repo(config=config, repo_format='maven',
-                    repo=config.remote_maven_repo)
+                    repo=config.global_maven_repo)
         logger.info(
-            'Please setup http auth for rf-snapshot repo and add it to group members of group maven')
+            'Please setup http auth for global-snapshots repo and add it to group members of group maven')
 
 
 if __name__ == '__main__':
