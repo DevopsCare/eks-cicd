@@ -83,23 +83,12 @@ EOF
 
 }
 
-variable "kubeconfig_filename" {
-}
-
-variable "kubernetes_host" {
-}
-
-variable "kubernetes_ca_certificate" {
-}
-
-variable "kubernetes_token" {
-}
-
-variable "project_prefix" {
-}
-
-variable "global_fqdn" {
-}
+variable "kubeconfig_filename" {}
+variable "kubernetes_host" {}
+variable "kubernetes_ca_certificate" {}
+variable "kubernetes_token" {}
+variable "project_prefix" {}
+variable "global_fqdn" {}
 
 variable "ecr_url" {
   default = ""

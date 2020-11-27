@@ -49,10 +49,6 @@ resource "helm_release" "nexus" {
     })
   ]
   atomic = true
-
-  lifecycle {
-    ignore_changes = [keyring]
-  }
 }
 
 resource "kubernetes_service" "nexus-internal" {

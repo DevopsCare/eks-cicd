@@ -48,10 +48,6 @@ resource "helm_release" "chartmuseum" {
   ]
   atomic = true
 
-  lifecycle {
-    ignore_changes = [keyring]
-  }
-
   depends_on = [
     kubernetes_secret.chartmuseum_secret
   ]

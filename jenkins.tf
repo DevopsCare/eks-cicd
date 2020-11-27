@@ -34,10 +34,6 @@ resource "helm_release" "jenkins" {
     })
   ]
   atomic = true
-
-  lifecycle {
-    ignore_changes = [keyring]
-  }
 }
 
 resource "kubernetes_cluster_role_binding" "jenkins_cluster_admin" {
