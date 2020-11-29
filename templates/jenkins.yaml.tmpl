@@ -21,6 +21,10 @@ rbac:
   create: true
   readSecrets: true
 
+serviceAccount:
+    annotations:
+        eks.amazonaws.com/role-arn: "${iamRole}"
+
 master:
   tag: lts-jdk11
   sidecars:

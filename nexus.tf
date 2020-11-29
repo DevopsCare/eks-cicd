@@ -34,7 +34,7 @@ resource "kubernetes_secret" "jenkins-maven-settings" {
 }
 
 resource "helm_release" "nexus" {
-  name       = "nexus"
+  name       = local.nexus
   chart      = "sonatype-nexus"
   repository = "https://oteemo.github.io/charts/"
   version    = var.nexus_helm_chart_version
@@ -46,6 +46,7 @@ resource "helm_release" "nexus" {
       global_fqdn            = var.global_fqdn,
       namespace              = kubernetes_namespace.cicd.id,
       default_admin_password = var.default_admin_password
+      iamRole                = module.irsa-nexus.this_iam_role_arn
     })
   ]
   atomic = true
@@ -120,4 +121,15 @@ EOT
     helm_release.chartmuseum,
     helm_release.nexus,
   ]
+}
+
+module "irsa-nexus" {
+  source                        = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
+  version                       = "3.4.0"
+  create_role                   = true
+  role_name                     = "eks-${local.nexus}"
+  provider_url                  = replace(var.eks_cluster.cluster_oidc_issuer_url, "https://", "")
+  number_of_role_policy_arns    = 1
+  role_policy_arns              = ["arn:aws:iam::aws:policy/AmazonS3FullAccess"]
+  oidc_fully_qualified_subjects = ["system:serviceaccount:${var.kubernetes_namespace}:${local.nexus}"]
 }

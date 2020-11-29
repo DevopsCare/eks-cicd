@@ -23,6 +23,10 @@ locals {
     "github"         = "https://github.com"
     "bitbucketcloud" = "https://bitbucket.org"
   }
+
+  jenkins     = "jenkins"
+  nexus       = "nexus"
+  chartmuseum = "chartmuseum"
 }
 
 provider "kubernetes" {

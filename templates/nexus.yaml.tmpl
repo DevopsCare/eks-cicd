@@ -15,17 +15,21 @@
 #
 
 fullnameOverride: nexus
-nameOverride: nexus
+nameOverride:     nexus
+
+serviceAccount:
+    annotations:
+        eks.amazonaws.com/role-arn: "${iamRole}"
 
 resources:
-  requests:
-    cpu: 200m
-    memory: 2Gi
+    requests:
+        cpu:    200m
+        memory: 2Gi
 podAnnotations:
-  cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
+    cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
 persistence:
-  enabled: true
-  storageSize: ${storage_size}
+    enabled:     true
+    storageSize: ${storage_size}
 
 service:
   enabled: true

@@ -15,7 +15,7 @@
 */
 
 resource "helm_release" "jenkins" {
-  name       = "jenkins"
+  name       = local.jenkins
   chart      = "jenkins"
   repository = "https://charts.helm.sh/stable"
   namespace  = kubernetes_namespace.cicd.id
@@ -31,6 +31,7 @@ resource "helm_release" "jenkins" {
       namespace      = kubernetes_namespace.cicd.id
       cadmium_repo   = var.cadmium_repo
       aws_region     = local.aws_region
+      iamRole        = module.irsa-jenkins.this_iam_role_arn
     })
   ]
   atomic = true
@@ -50,4 +51,15 @@ resource "kubernetes_cluster_role_binding" "jenkins_cluster_admin" {
     name      = "jenkins"
     namespace = kubernetes_namespace.cicd.id
   }
+}
+
+module "irsa-jenkins" {
+  source                        = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
+  version                       = "3.4.0"
+  create_role                   = true
+  role_name                     = "eks-${local.jenkins}"
+  provider_url                  = replace(var.eks_cluster.cluster_oidc_issuer_url, "https://", "")
+  number_of_role_policy_arns    = 1
+  role_policy_arns              = ["arn:aws:iam::aws:policy/AdministratorAccess"]
+  oidc_fully_qualified_subjects = ["system:serviceaccount:${var.kubernetes_namespace}:${local.jenkins}"]
 }
