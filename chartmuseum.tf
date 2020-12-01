@@ -38,7 +38,7 @@ resource "kubernetes_secret" "chartmuseum_secret" {
 resource "helm_release" "chartmuseum" {
   name       = "chartmuseum"
   chart      = "chartmuseum"
-  repository = "https://kubernetes-charts.storage.googleapis.com"
+  repository = "https://charts.helm.sh/stable"
   version    = var.chartmuseum_helm_chart_version
   namespace  = kubernetes_namespace.cicd.id
   values = [
