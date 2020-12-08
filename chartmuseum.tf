@@ -56,11 +56,10 @@ resource "helm_release" "chartmuseum" {
 
 module "irsa-chartmuseum" {
   source                        = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
-  version                       = "3.4.0"
+  version                       = "3.6.0"
   create_role                   = true
   role_name                     = "eks-${local.chartmuseum}"
   provider_url                  = replace(var.eks_cluster.cluster_oidc_issuer_url, "https://", "")
-  number_of_role_policy_arns    = 1
   role_policy_arns              = ["arn:aws:iam::aws:policy/AmazonS3FullAccess"]
   oidc_fully_qualified_subjects = ["system:serviceaccount:${var.kubernetes_namespace}:${local.chartmuseum}"]
 }
