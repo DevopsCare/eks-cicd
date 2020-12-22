@@ -17,6 +17,10 @@
 fullnameOverride: nexus
 nameOverride:     nexus
 
+initAdminPassword:
+    enabled: true
+    password: "${admin_password}"
+
 serviceAccount:
     annotations:
         eks.amazonaws.com/role-arn: "${iamRole}"
@@ -39,21 +43,18 @@ persistence:
     storageSize: ${storage_size}
 
 service:
-  enabled: true
-  name: nexus
-  port: 80
-  targetPort: 8081
-  portName: nexus-http
-  ports: {}
-  annotations:
-    fabric8.io/expose: "true"
-    fabric8.io/ingress.annotations: |-
-      kubernetes.io/ingress.class: nginx
-      nginx.ingress.kubernetes.io/proxy-body-size: 256m
-      cert-manager.io/cluster-issuer: letsencrypt-prod
-
-ingress:
-  enabled: false
+    enabled:    true
+    name:       nexus
+    port:       80
+    targetPort: 8081
+    portName:   nexus-http
+    ports: { }
+    annotations:
+        fabric8.io/expose:              "true"
+        fabric8.io/ingress.annotations: |-
+                                        kubernetes.io/ingress.class: nginx
+                                        nginx.ingress.kubernetes.io/proxy-body-size: 256m
+                                        cert-manager.io/cluster-issuer: letsencrypt-prod
 
 nexusProxy:
-  enabled: false
+    enabled: false

@@ -14,9 +14,10 @@
 * limitations under the License.
 */
 
-variable "default_admin_password" {
-  type    = string
-  default = "overTheCuckoo"
+variable "admin_password" {
+  type        = string
+  default     = ""
+  description = "Will autogenerate random if not set"
 }
 
 # Jenkins specific
@@ -104,8 +105,8 @@ variable "cadmium_repo" {
 }
 
 variable "nexus_s3_bucket" {
-  type    = string
-  default = "example-nexus-s3-bucket"
+  type        = string
+  description = "S3 bucket that Nexus will use as main blob store"
 }
 
 variable "provision_nexus" {

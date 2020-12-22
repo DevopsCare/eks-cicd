@@ -28,7 +28,7 @@ resource "kubernetes_secret" "jenkins-maven-settings" {
   data = {
     "settings.xml" = templatefile("${path.module}/templates/settings.xml.tmpl", {
       project_prefix = var.project_prefix,
-      admin_password = var.default_admin_password
+      admin_password = local.admin_password
     })
   }
 }
@@ -41,12 +41,12 @@ resource "helm_release" "nexus" {
   namespace  = kubernetes_namespace.cicd.id
   values = [
     templatefile("${path.module}/templates/nexus.yaml.tmpl", {
-      storage_size           = var.nexus_storage_size,
-      project_prefix         = var.project_prefix,
-      global_fqdn            = var.global_fqdn,
-      namespace              = kubernetes_namespace.cicd.id,
-      default_admin_password = var.default_admin_password
-      iamRole                = module.irsa-nexus.this_iam_role_arn
+      storage_size   = var.nexus_storage_size,
+      project_prefix = var.project_prefix,
+      global_fqdn    = var.global_fqdn,
+      namespace      = kubernetes_namespace.cicd.id,
+      admin_password = local.admin_password
+      iamRole        = module.irsa-nexus.this_iam_role_arn
     })
   ]
   atomic = true
@@ -87,11 +87,11 @@ resource "local_file" "nexus_provision_job" {
   count = var.provision_nexus ? 1 : 0
 
   content = templatefile("${path.module}/templates/nexus.provision.yaml.tmpl", {
-    nexus_provision_py     = base64encode(file("${path.module}/scripts/nexus_provision.py"))
-    namespace              = var.kubernetes_namespace
-    default_admin_password = var.default_admin_password
-    s3_bucket_name         = var.nexus_s3_bucket
-    global_maven_repo_url  = var.global_maven_repo_url
+    nexus_provision_py    = base64encode(file("${path.module}/scripts/nexus_provision.py"))
+    namespace             = var.kubernetes_namespace
+    admin_password        = local.admin_password
+    s3_bucket_name        = var.nexus_s3_bucket
+    global_maven_repo_url = var.global_maven_repo_url
   })
 
   filename = "${path.module}/nexus_provision_job.yaml"

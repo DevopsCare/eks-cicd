@@ -25,7 +25,7 @@ resource "helm_release" "jenkins" {
       project_prefix = var.project_prefix
       global_fqdn    = var.global_fqdn
       ecr_url        = var.ecr_url
-      admin_password = var.default_admin_password
+      admin_password = local.admin_password
       jenkins_cpu    = var.jenkins_resources["cpu"]
       jenkins_memory = var.jenkins_resources["memory"]
       namespace      = kubernetes_namespace.cicd.id

@@ -30,7 +30,7 @@ resource "kubernetes_secret" "chartmuseum_secret" {
 
   data = {
     username = "admin"
-    password = var.default_admin_password
+    password = local.admin_password
   }
 }
 
