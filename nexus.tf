@@ -129,6 +129,38 @@ module "irsa-nexus" {
   create_role                   = true
   role_name                     = "eks-${local.nexus}"
   provider_url                  = replace(var.eks_cluster.cluster_oidc_issuer_url, "https://", "")
-  role_policy_arns              = ["arn:aws:iam::aws:policy/AmazonS3FullAccess"]
+  role_policy_arns              = [module.iam_policy_from_data_source.arn]
   oidc_fully_qualified_subjects = ["system:serviceaccount:${var.kubernetes_namespace}:${local.nexus}"]
+}
+
+module "iam_policy_from_data_source" {
+  source  = "terraform-aws-modules/iam/aws//modules/iam-policy"
+  version = "3.6.0"
+  name    = "eks-nexus"
+  policy  = data.aws_iam_policy_document.nexus.json
+}
+
+data "aws_iam_policy_document" "nexus" {
+  statement {
+    effect = "Allow"
+    actions = [
+      "s3:PutObject",
+      "s3:GetObject",
+      "s3:DeleteObject",
+      "s3:ListBucket",
+      "s3:GetLifecycleConfiguration",
+      "s3:PutLifecycleConfiguration",
+      "s3:PutObjectTagging",
+      "s3:GetObjectTagging",
+      "s3:DeleteObjectTagging",
+      "s3:DeleteBucket",
+      "s3:CreateBucket",
+      "s3:GetBucketAcl",
+    ]
+
+    resources = [
+      "arn:aws:s3:::${var.nexus_s3_bucket}",
+      "arn:aws:s3:::${var.nexus_s3_bucket}/*",
+    ]
+  }
 }

@@ -21,12 +21,19 @@ serviceAccount:
     annotations:
         eks.amazonaws.com/role-arn: "${iamRole}"
 
-resources:
-    requests:
-        cpu:    200m
-        memory: 2Gi
-podAnnotations:
-    cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
+nexus:
+    resources:
+        requests:
+            cpu:    200m
+            memory: 2Gi
+
+    securityContextEnabled: true
+    securityContext:
+        fsGroup: 1000 # this needs to match hardcoded nexus group id
+
+    podAnnotations:
+        cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
+
 persistence:
     enabled:     true
     storageSize: ${storage_size}
