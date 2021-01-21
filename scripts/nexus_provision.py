@@ -122,8 +122,8 @@ def update_admin_password(config: Config) -> bool:
             urljoin(config.nexus_url, 'security/users'), auth=HTTPBasicAuth('admin', 'admin123'))
         if response.status_code in [401, 403]:
             raise NexusProvisionException(
-                'Provided credentials is not correct, default credentials: \
-                admin:admin123 also doesn\'t work')
+                'Provided credentials are not correct, default credentials: \
+                admin:admin123 also didn\'t work')
         elif response.ok:
             response = requests.put(
                 urljoin(config.nexus_url,

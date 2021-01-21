@@ -17,9 +17,8 @@
 fullnameOverride: nexus
 nameOverride:     nexus
 
-# curl: (28) Failed to connect to nexus.cicd port 8081: Operation timed out
 initAdminPassword:
-    enabled:  true
+    enabled:  ${set_admin_password}
     password: "${admin_password}"
 
 serviceAccount:

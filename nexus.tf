@@ -41,12 +41,13 @@ resource "helm_release" "nexus" {
   namespace  = kubernetes_namespace.cicd.id
   values = [
     templatefile("${path.module}/templates/nexus.yaml.tmpl", {
-      storage_size   = var.nexus_storage_size,
-      project_prefix = var.project_prefix,
-      global_fqdn    = var.global_fqdn,
-      namespace      = kubernetes_namespace.cicd.id,
-      admin_password = local.admin_password
-      iamRole        = module.irsa-nexus.this_iam_role_arn
+      storage_size       = var.nexus_storage_size
+      project_prefix     = var.project_prefix
+      global_fqdn        = var.global_fqdn
+      namespace          = kubernetes_namespace.cicd.id
+      set_admin_password = var.provision_nexus ? "false" : "true"
+      admin_password     = local.admin_password
+      iamRole            = module.irsa-nexus.this_iam_role_arn
     })
   ]
   atomic = true
@@ -117,8 +118,6 @@ EOT
   depends_on = [
     local_file.nexus_provision_job,
     kubernetes_namespace.cicd,
-    helm_release.jenkins,
-    helm_release.chartmuseum,
     helm_release.nexus,
   ]
 }
