@@ -17,8 +17,9 @@
 fullnameOverride: nexus
 nameOverride:     nexus
 
+# curl: (28) Failed to connect to nexus.cicd port 8081: Operation timed out
 initAdminPassword:
-    enabled: true
+    enabled:  true
     password: "${admin_password}"
 
 serviceAccount:
@@ -43,12 +44,15 @@ persistence:
     storageSize: ${storage_size}
 
 service:
-    enabled:    true
-    name:       nexus
-    port:       80
-    targetPort: 8081
-    portName:   nexus-http
-    ports: { }
+    enabled: true
+    name:    nexus
+    ports:
+        -   name:       nexus-http
+            targetPort: 8081
+            port:       80
+        -   name:       nexus-alternative
+            targetPort: 8081
+            port:       8081
     annotations:
         fabric8.io/expose:              "true"
         fabric8.io/ingress.annotations: |-
