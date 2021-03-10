@@ -107,6 +107,8 @@ master:
               env:
               - key: "DOCKER_REGISTRY"
                 value: "${ecr_url}"
+              - key: "SKAFFOLD_DEFAULT_REPO"
+                value: "${ecr_url}/${project_prefix}"
               - key: "GLOBAL_ENABLED_ENVIRONMENT_TYPE"
                 value: "K8 Namespace"
               - key: "GLOBAL_FQDN"
@@ -1017,7 +1019,6 @@ master:
   - pipeline-maven:3.8.2
   - pipeline-milestone-step:1.3.1
   - pipeline-model-api:1.6.0
-  - pipeline-model-declarative-agent:1.1.1
   - pipeline-model-definition:1.6.0
   - pipeline-model-extensions:1.6.0
   - pipeline-rest-api:2.12
@@ -1063,10 +1064,11 @@ agent:
   envVars:
     - name: DOCKER_REGISTRY
       value: ${ecr_url}
+    - name: SKAFFOLD_DEFAULT_REPO
+      value: ${ecr_url}/${project_prefix}
     - name: PROJECT_PREFIX
       value: ${project_prefix}
     - name: GLOBAL_FQDN
       value: ${global_fqdn}
     - name: GLOBAL_ENABLED_ENVIRONMENT_TYPE
       value: K8 Namespace
-
