@@ -24,7 +24,7 @@ resource "helm_release" "jenkins" {
     templatefile("${path.module}/templates/jenkins.yaml.tmpl", {
       project_prefix = var.project_prefix
       global_fqdn    = var.global_fqdn
-      ecr_url        = var.ecr_url
+      ecr_url        = local.ecr_url
       admin_password = local.admin_password
       jenkins_cpu    = var.jenkins_resources["cpu"]
       jenkins_memory = var.jenkins_resources["memory"]

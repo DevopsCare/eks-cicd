@@ -90,10 +90,6 @@ variable "project_prefix" {}
 variable "global_fqdn" {}
 variable "domain" {}
 
-variable "ecr_url" {
-  default = ""
-}
-
 variable "kubernetes_namespace" {
   type    = string
   default = "cicd"

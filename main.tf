@@ -32,6 +32,8 @@ locals {
     "bitbucketcloud" = "https://bitbucket.org"
   }
 
+  ecr_url = "${data.aws_caller_identity.current.account_id}.dkr.ecr.${data.aws_region.current.id}.amazonaws.com"
+
   jenkins     = "jenkins"
   nexus       = "nexus"
   chartmuseum = "chartmuseum"
