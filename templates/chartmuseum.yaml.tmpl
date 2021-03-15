@@ -42,6 +42,8 @@ ingress:
     enabled: false
 
 env:
+  open:
+    DISABLE_API: false
   existingSecret: chartmuseum-secret
   existingSecretMappings:
     BASIC_AUTH_USER: username
