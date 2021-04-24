@@ -15,9 +15,14 @@
 */
 
 resource "helm_release" "jenkins" {
+  depends_on = [
+    kubernetes_secret.bitbucket-token, kubernetes_secret.chartmuseum_secret,
+    kubernetes_secret.cadmium-usernamePassword, kubernetes_secret.github-token, kubernetes_secret.github-usernamePassword,
+    kubernetes_secret.jenkins-docker-cfg, kubernetes_secret.jenkins-maven-settings
+  ]
   name       = local.jenkins
   chart      = "jenkins"
-  repository = "https://charts.helm.sh/stable"
+  repository = "https://charts.jenkins.io"
   namespace  = kubernetes_namespace.cicd.id
   version    = var.jenkins_helm_chart_version
   values = [

@@ -55,8 +55,7 @@ resource "kubernetes_namespace" "cicd" {
 
 // See https://jenkinsci.github.io/kubernetes-credentials-provider-plugin/
 resource "kubernetes_secret" "bitbucket-token" {
-  count      = var.git_provider == "bitbucketcloud" ? 1 : 0
-  depends_on = [helm_release.jenkins]
+  count = var.git_provider == "bitbucketcloud" ? 1 : 0
 
   metadata {
     name      = "bitbucket-token"
@@ -82,8 +81,7 @@ resource "kubernetes_secret" "bitbucket-token" {
 }
 
 resource "kubernetes_secret" "github-usernamePassword" {
-  count      = var.git_provider == "github" ? 1 : 0
-  depends_on = [helm_release.jenkins]
+  count = var.git_provider == "github" ? 1 : 0
 
   metadata {
     name      = "github-username-password"
@@ -109,8 +107,7 @@ resource "kubernetes_secret" "github-usernamePassword" {
 }
 
 resource "kubernetes_secret" "cadmium-usernamePassword" {
-  count      = var.git_provider == "github" ? 1 : 0
-  depends_on = [helm_release.jenkins]
+  count = var.git_provider == "github" ? 1 : 0
 
   metadata {
     name      = "cadmium"
@@ -135,8 +132,7 @@ resource "kubernetes_secret" "cadmium-usernamePassword" {
 }
 
 resource "kubernetes_secret" "github-token" {
-  count      = var.git_provider == "github" ? 1 : 0
-  depends_on = [helm_release.jenkins]
+  count = var.git_provider == "github" ? 1 : 0
 
   metadata {
     name      = "github-token"
@@ -160,8 +156,6 @@ resource "kubernetes_secret" "github-token" {
 }
 
 resource "kubernetes_secret" "jenkins-docker-cfg" {
-  depends_on = [helm_release.jenkins]
-
   metadata {
     name      = "jenkins-docker-cfg"
     namespace = kubernetes_namespace.cicd.id
