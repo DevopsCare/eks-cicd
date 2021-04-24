@@ -1,4 +1,22 @@
-.terraform
+.vscode
+
+#  Local .terraform directories
+**/.terraform/*
+**/.terragrunt-cache/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+.vscode
+
+#  Local .terraform directories
+**/.terraform/*
+**/.terragrunt-cache/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
 expose_controller_job.yaml
 nexus_provision_job.yaml
 *.iml
