@@ -14,4 +14,5 @@ variable "admin_password" {
   type        = string
   default     = ""
   description = "Will autogenerate random if not set"
+  sensitive   = true
 }
