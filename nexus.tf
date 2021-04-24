@@ -15,11 +15,6 @@
 */
 
 resource "kubernetes_secret" "jenkins-maven-settings" {
-  depends_on = [
-    helm_release.jenkins,
-    helm_release.nexus
-  ]
-
   metadata {
     name      = "jenkins-maven-settings"
     namespace = kubernetes_namespace.cicd.id
