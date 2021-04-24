@@ -14,12 +14,6 @@
 * limitations under the License.
 */
 
-variable "admin_password" {
-  type        = string
-  default     = ""
-  description = "Will autogenerate random if not set"
-}
-
 # Jenkins specific
 variable "jenkins_resources" {
   type = map(string)

@@ -17,14 +17,6 @@
 data "aws_caller_identity" "current" {}
 data "aws_region" "current" {}
 
-resource "random_password" "admin" {
-  length      = 16
-  min_lower   = 2
-  min_upper   = 2
-  min_numeric = 2
-  special     = false
-}
-
 locals {
   aws_region = data.aws_region.current.name
   git_provider_url = {
@@ -37,8 +29,6 @@ locals {
   jenkins     = "jenkins"
   nexus       = "nexus"
   chartmuseum = "chartmuseum"
-
-  admin_password = length(var.admin_password) > 0 ? var.admin_password : random_password.admin.result
 }
 
 provider "kubernetes" {
