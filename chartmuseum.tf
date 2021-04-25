@@ -44,7 +44,7 @@ resource "helm_release" "chartmuseum" {
   values = [
     templatefile("${path.module}/templates/chartmuseum.yaml.tmpl", {
       storage_size = var.chartmuseum_storage_size
-      iamRole      = module.irsa-chartmuseum.this_iam_role_arn
+      iam_role     = module.irsa-chartmuseum.this_iam_role_arn
     })
   ]
   atomic = true

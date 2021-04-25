@@ -36,7 +36,7 @@ resource "helm_release" "jenkins" {
       namespace      = kubernetes_namespace.cicd.id
       cadmium_repo   = var.cadmium_repo
       aws_region     = local.aws_region
-      iamRole        = module.irsa-jenkins.this_iam_role_arn
+      iam_role       = module.irsa-jenkins.this_iam_role_arn
     })
   ]
   atomic = true

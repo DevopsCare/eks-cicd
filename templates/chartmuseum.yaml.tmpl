@@ -17,18 +17,18 @@
 fullnameOverride: chartmuseum
 
 serviceAccount:
-    annotations:
-        eks.amazonaws.com/role-arn: "${iamRole}"
+  annotations:
+    eks.amazonaws.com/role-arn: "${iam_role}"
 
 resources:
-    requests:
-        cpu:    100m
-        memory: 128Mi
-    limits:
-        cpu:    100m
-        memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 100m
+    memory: 128Mi
 podAnnotations:
-    cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
+  cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
 persistence:
   enabled: true
   size: ${storage_size}
@@ -39,7 +39,7 @@ service:
     fabric8.io/ingress.annotations: "kubernetes.io/ingress.class: nginx\ncert-manager.io/cluster-issuer: letsencrypt-prod"
 
 ingress:
-    enabled: false
+  enabled: false
 
 env:
   open:

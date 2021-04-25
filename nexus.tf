@@ -42,7 +42,7 @@ resource "helm_release" "nexus" {
       namespace          = kubernetes_namespace.cicd.id
       set_admin_password = var.provision_nexus ? "false" : "true"
       admin_password     = local.admin_password
-      iamRole            = module.irsa-nexus.this_iam_role_arn
+      iam_role           = module.irsa-nexus.this_iam_role_arn
     })
   ]
   atomic = true
