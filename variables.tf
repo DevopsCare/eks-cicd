@@ -24,7 +24,7 @@ variable "jenkins_resources" {
 }
 variable "jenkins_helm_chart_version" {
   type    = string
-  default = "3.3.9"
+  default = "3.5.17"
 }
 #
 

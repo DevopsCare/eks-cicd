@@ -29,131 +29,160 @@ controller:
     fabric8.io/expose: "true"
     fabric8.io/ingress.annotations: "kubernetes.io/ingress.class: nginx\ncert-manager.io/cluster-issuer: letsencrypt-prod"
 
+  # Use this on fresh installation to get new pinned plugin list (parse init container)
+  installPluginsLatest:
+    - ansicolor
+    - antisamy-markup-formatter
+    - basic-branch-build-strategies
+    - blueocean
+    - cloudbees-folder
+    - configuration-as-code-groovy
+    - configuration-as-code
+    - folder-properties
+    - github
+    - github-branch-source
+    - greenballs
+    - job-dsl
+    - junit
+    - kubernetes
+    - kubernetes-credentials-provider
+    - maven-plugin
+    - pipeline-aws
+    - pipeline-github
+    - pipeline-maven
+    - pipeline-multibranch-defaults
+    - pipeline-rest-api
+    - pipeline-utility-steps
+    - pipeline-stage-view
+    - sonar
+    - testng-plugin
+    - timestamper
+    - ws-cleanup
+
   installPlugins:
     - ace-editor:1.1
-    - ansicolor:0.7.5
+    - ansicolor:1.0.0
     - antisamy-markup-formatter:2.1
     - apache-httpcomponents-client-4-api:4.5.13-1.0
     - authentication-tokens:1.4
-    - aws-credentials:1.29
+    - aws-credentials:1.30
     - aws-java-sdk:1.11.995
     - basic-branch-build-strategies:1.3.2
-    - blueocean:1.24.6
     - blueocean-autofavorite:1.2.4
-    - blueocean-bitbucket-pipeline:1.24.6
-    - blueocean-commons:1.24.6
-    - blueocean-config:1.24.6
-    - blueocean-core-js:1.24.6
-    - blueocean-dashboard:1.24.6
+    - blueocean-bitbucket-pipeline:1.24.8
+    - blueocean-commons:1.24.8
+    - blueocean-config:1.24.8
+    - blueocean-core-js:1.24.8
+    - blueocean-dashboard:1.24.8
     - blueocean-display-url:2.4.1
-    - blueocean-events:1.24.6
-    - blueocean-git-pipeline:1.24.6
-    - blueocean-github-pipeline:1.24.6
-    - blueocean-i18n:1.24.6
-    - blueocean-jira:1.24.6
-    - blueocean-jwt:1.24.6
-    - blueocean-personalization:1.24.6
-    - blueocean-pipeline-api-impl:1.24.6
-    - blueocean-pipeline-editor:1.24.6
-    - blueocean-pipeline-scm-api:1.24.6
-    - blueocean-rest:1.24.6
-    - blueocean-rest-impl:1.24.6
-    - blueocean-web:1.24.6
-    - bouncycastle-api:2.20
-    - branch-api:2.6.3
-    - cloudbees-bitbucket-branch-source:2.9.8
-    - cloudbees-folder:6.15
-    - config-file-provider:3.7.2
-    - configuration-as-code:1.47
+    - blueocean-events:1.24.8
+    - blueocean-git-pipeline:1.24.8
+    - blueocean-github-pipeline:1.24.8
+    - blueocean-i18n:1.24.8
+    - blueocean-jwt:1.24.8
+    - blueocean-personalization:1.24.8
+    - blueocean-pipeline-api-impl:1.24.8
+    - blueocean-pipeline-editor:1.24.8
+    - blueocean-pipeline-scm-api:1.24.8
+    - blueocean-rest-impl:1.24.8
+    - blueocean-rest:1.24.8
+    - blueocean-web:1.24.8
+    - blueocean:1.24.8
+    - bootstrap4-api:4.6.0-3
+    - bootstrap5-api:5.1.0-3
+    - bouncycastle-api:2.24
+    - branch-api:2.6.5
+    - caffeine-api:2.9.2-29.v717aac953ff3
+    - checks-api:1.7.2
+    - cloudbees-bitbucket-branch-source:2.9.11
+    - cloudbees-folder:6.16
+    - config-file-provider:3.8.1
     - configuration-as-code-groovy:1.1
-    - copyartifact:1.46
-    - credentials:2.3.18
-    - credentials-binding:1.24
-    - display-url-api:2.3.4
-    - docker-commons:1.17
-    - docker-workflow:1.26
-    - durable-task:1.35
+    - configuration-as-code:1.52
+    - credentials-binding:1.27
+    - credentials:2.6.1
+    - display-url-api:2.3.5
+    - durable-task:1.39
+    - echarts-api:5.1.2-11
     - favorite:2.3.3
     - folder-properties:1.2.1
-    - git:4.7.1
-    - git-client:3.7.1
-    - git-server:1.9
-    - github:1.33.1
+    - font-awesome-api:5.15.4-1
+    - git-client:3.9.0
+    - git-server:1.10
+    - git:4.8.2
     - github-api:1.123
-    - github-branch-source:2.10.2
-    - gradle:1.36
+    - github-branch-source:2.11.2
+    - github:1.34.1
     - greenballs:1.15.1
     - h2-api:1.4.199
     - handlebars:3.0.8
     - handy-uri-templates-2-api:2.1.8-1.0
     - htmlpublisher:1.25
-    - http_request:1.8.27
-    - jackson2-api:2.12.3
+    - jackson2-api:2.12.4
     - javadoc:1.6
-    - jaxb:2.3.0.1
-    - jenkins-design-language:1.24.6
-    - jira:3.2.1
+    - jenkins-design-language:1.24.8
+    - jjwt-api:0.11.2-9.c8b45b8bb173
     - job-dsl:1.77
-    - jquery-detached:1.2.1
+    - jquery3-api:3.6.0-2
     - jsch:0.1.55.2
-    - junit:1.49
-    - kubernetes:1.29.4
-    - kubernetes-client-api:4.13.3-1
-    - kubernetes-credentials:0.8.0
-    - kubernetes-credentials-provider:0.18-1
-    - ldap:2.6
-    - lockable-resources:2.10
+    - junit:1.53
+    - kubernetes-client-api:5.4.1
+    - kubernetes-credentials-provider:0.20
+    - kubernetes-credentials:0.9.0
+    - kubernetes:1.30.1
     - mailer:1.34
-    - matrix-auth:2.6.6
-    - matrix-project:1.18
-    - maven-plugin:3.10
-    - metrics:4.0.2.7
+    - matrix-project:1.19
+    - maven-plugin:3.12
+    - metrics:4.0.2.8
     - momentjs:1.1.1
-    - oauth-credentials:0.4
+    - okhttp-api:3.14.9
     - pipeline-aws:1.43
-    - pipeline-build-step:2.13
-    - pipeline-graph-analysis:1.10
+    - pipeline-build-step:2.15
+    - pipeline-github:2.7
+    - pipeline-graph-analysis:1.11
     - pipeline-input-step:2.12
     - pipeline-maven:3.10.0
     - pipeline-milestone-step:1.3.2
-    - pipeline-model-api:1.8.4
-    - pipeline-model-definition:1.8.4
-    - pipeline-model-extensions:1.8.4
+    - pipeline-model-api:1.9.1
+    - pipeline-model-definition:1.9.1
+    - pipeline-model-extensions:1.9.1
+    - pipeline-multibranch-defaults:2.1
     - pipeline-rest-api:2.19
     - pipeline-stage-step:2.5
-    - pipeline-stage-tags-metadata:1.8.4
+    - pipeline-stage-tags-metadata:1.9.1
     - pipeline-stage-view:2.19
-    - pipeline-utility-steps:2.7.1
+    - pipeline-utility-steps:2.10.0
     - plain-credentials:1.7
-    - pubsub-light:1.13
-    - rebuild:1.32
-    - resource-disposer:0.15
-    - saml:2.0.3
-    - scm-api:2.6.4
-    - scm-filter-branch-pr:0.5.1
-    - script-security:1.76
-    - snakeyaml-api:1.27.0
-    - sonar:2.13
+    - plugin-util-api:2.4.0
+    - popper-api:1.16.1-2
+    - popper2-api:2.9.3-1
+    - pubsub-light:1.16
+    - resource-disposer:0.16
+    - scm-api:2.6.5
+    - script-security:1.78
+    - snakeyaml-api:1.29.1
+    - sonar:2.13.1
     - sse-gateway:1.24
-    - ssh-credentials:1.18.1
-    - structs:1.22
+    - ssh-credentials:1.19
+    - sshd:3.1.0
+    - structs:1.23
     - testng-plugin:1.15
-    - timestamper:1.12
-    - token-macro:2.15
+    - timestamper:1.13
+    - token-macro:266.v44a80cf277fd
     - trilead-api:1.0.13
     - variant:1.4
-    - workflow-aggregator:2.6
-    - workflow-api:2.42
-    - workflow-basic-steps:2.23
-    - workflow-cps:2.90
-    - workflow-cps-global-lib:2.18
-    - workflow-durable-task-step:2.38
-    - workflow-job:2.40
-    - workflow-multibranch:2.23
-    - workflow-scm-step:2.12
-    - workflow-step-api:2.23
+    - workflow-api:2.46
+    - workflow-basic-steps:2.24
+    - workflow-cps-global-lib:2.21
+    - workflow-cps:2.93
+    - workflow-durable-task-step:2.39
+    - workflow-job:2.41
+    - workflow-multibranch:2.26
+    - workflow-scm-step:2.13
+    - workflow-step-api:2.24
     - workflow-support:3.8
     - ws-cleanup:0.39
+
   initializeOnce: true
   enableRawHtmlMarkupFormatter: true
   scriptApproval:
@@ -290,6 +319,10 @@ agent:
       value: "/home/jenkins/agent"
     - name: "MAVEN_OPTS"
       value: "-Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn"
+    - name: "_JAVA_OPTIONS"
+      value: "-XX:+UnlockExperimentalVMOptions \
+              -Dsun.zip.disableMemoryMapping=true -XX:+UseParallelGC -XX:MinHeapFreeRatio=5 \
+              -XX:MaxHeapFreeRatio=10 -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90"
 
   # Best reference is https://<jenkins_url>/configuration-as-code/reference#Cloud-kubernetes. The example below creates a python pod template.
   podTemplates:
@@ -306,7 +339,7 @@ agent:
             TTYEnabled: true
             args: "cat"
             command: "/bin/sh -c"
-          - image: "bitnami/kubectl:1.16"
+          - image: "bitnami/kubectl:1.20"
             name: "kubectl"
             resourceLimitCpu: "500m"
             resourceLimitMemory: "256Mi"
@@ -321,7 +354,7 @@ agent:
         serviceAccount: "jenkins"
     gradle: |
       - containers:
-          - image: "gcr.io/jenkinsxio/builder-gradle:2.1.155-778"
+          - image: "ghcr.io/jenkins-x/builder-gradle:2.1.155-778"
             name: "gradle"
             resourceLimitCpu: "1"
             resourceLimitMemory: "1024Mi"
@@ -336,7 +369,7 @@ agent:
         serviceAccount: "jenkins"
     jx-base: |
       - containers:
-          - image: "gcr.io/jenkinsxio/builder-jx:2.1.155-778"
+          - image: "ghcr.io/jenkins-x/builder-jx:2.0.1225-563-patch3"
             name: "jx-base"
             resourceLimitCpu: "400m"
             resourceLimitMemory: "512Mi"
@@ -351,7 +384,7 @@ agent:
         serviceAccount: "jenkins"
     maven: |
       - containers:
-          - image: "gcr.io/jenkinsxio/builder-maven:2.1.155-778"
+          - image: "ghcr.io/jenkins-x/builder-maven:2.0.1225-563-patch3"
             name: "maven"
             resourceLimitCpu: "1"
             resourceLimitMemory: "1024Mi"
@@ -366,7 +399,7 @@ agent:
         serviceAccount: "jenkins"
     maven-java11: |
       - containers:
-          - image: "gcr.io/jenkinsxio/builder-maven-java11:2.1.155-778"
+          - image: "ghcr.io/jenkins-x/builder-maven-java11:2.1.155-779-patch3"
             name: "maven"
             resourceLimitCpu: "1"
             resourceLimitMemory: "1024Mi"
@@ -391,21 +424,6 @@ agent:
             args: "cat"
             command: "/bin/sh -c"
         name: "packer"
-        serviceAccount: "jenkins"
-    promote: |
-      - containers:
-          - image: "gcr.io/jenkinsxio/builder-jx:2.1.155-778"
-            name: "promote"
-            resourceLimitCpu: "400m"
-            resourceLimitMemory: "200Mi"
-            resourceRequestCpu: "200m"
-            resourceRequestMemory: "100Mi"
-            runAsUser: 0
-            runAsGroup: 1000
-            TTYEnabled: true
-            args: "cat"
-            command: "/bin/sh -c"
-        name: "promote"
         serviceAccount: "jenkins"
     python: |
       - containers:
@@ -439,7 +457,7 @@ agent:
         serviceAccount: "jenkins"
     terraform: |
       - containers:
-          - image: "hashicorp/terraform:0.12.24"
+          - image: "hashicorp/terraform:1.0.6"
             name: "terraform"
             resourceLimitCpu: "1"
             resourceLimitMemory: "1448Mi"
