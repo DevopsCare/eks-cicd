@@ -22,11 +22,11 @@ terraform {
     }
     helm = {
       source  = "hashicorp/helm"
-      version = "~>1.3"
+      version = "~> 2"
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = "1.13.3"
+      version = "~> 2"
     }
     local = {
       source = "hashicorp/local"
